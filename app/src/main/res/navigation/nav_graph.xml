@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.example.maystech.fragment.HomeFragment"
+        android:label="Trang chủ"/>
+
+    <fragment
+        android:id="@+id/cart"
+        android:name="com.example.maystech.fragment.CartFragment"
+        android:label="Giỏ hàng"/>
+
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.maystech.fragment.ProfileFragment"
+        android:label="Hồ sơ"/>
+
+</navigation>

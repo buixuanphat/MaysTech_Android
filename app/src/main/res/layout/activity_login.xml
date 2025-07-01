@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity"
+    android:background="@color/background"
+    >
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:src="@drawable/logo_no_background"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:layout_marginTop="100dp"/>
+
+    <TextView
+        android:id="@+id/tv_app_name"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:text="maystech"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/black"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/ln_email"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="30dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:background="@drawable/shape_input_rounded"
+        >
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_account_circle_filled_24px"
+            android:background="@null"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Email"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ln_password"
+        app:layout_constraintTop_toBottomOf="@+id/ln_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="15dp"
+        android:layout_marginHorizontal="30dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:background="@drawable/shape_input_rounded"
+        >
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_visibility_off_24px"
+            android:background="@null"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Mật khẩu"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:background="@android:color/transparent"
+            android:inputType="textPassword"/>
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tv_password"
+        app:layout_constraintTop_toBottomOf="@id/ln_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="30dp"
+        app:cardCornerRadius="50dp"
+        android:backgroundTint="@color/colorPrimaryPastel"
+        android:elevation="10dp"
+        android:translationZ="10dp"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/pacifico_regular"
+            android:gravity="center"
+            android:text="Đăng nhập"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        app:layout_constraintBottom_toTopOf="@+id/tv_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chưa có tài khoản?"
+        android:gravity="center"
+        android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/tv_register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng kí"
+        android:gravity="center"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
