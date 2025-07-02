@@ -1,7 +1,6 @@
-package com.example.maystech.adapter;
+package com.example.maystech.ui.home;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.maystech.databinding.ItemBannerBinding;
-import com.example.maystech.model.ProductHighlight;
+import com.example.maystech.data.model.ProductHighlight;
 
 import java.util.List;
 

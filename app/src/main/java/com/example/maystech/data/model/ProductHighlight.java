@@ -1,4 +1,4 @@
-package com.example.maystech.model;
+package com.example.maystech.data.model;
 
 public class ProductHighlight {
     private int id;

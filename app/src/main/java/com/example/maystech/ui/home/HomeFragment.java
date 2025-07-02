@@ -1,4 +1,4 @@
-package com.example.maystech.fragment;
+package com.example.maystech.ui.home;
 
 import android.os.Bundle;
 
@@ -10,10 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.maystech.R;
-import com.example.maystech.adapter.BannerAdapter;
 import com.example.maystech.databinding.FragmentHomeBinding;
-import com.example.maystech.model.ProductHighlight;
+import com.example.maystech.data.model.ProductHighlight;
 
 import java.util.LinkedList;
 import java.util.List;
