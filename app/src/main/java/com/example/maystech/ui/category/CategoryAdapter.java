@@ -1,10 +1,8 @@
-package com.example.maystech.ui.home;
+package com.example.maystech.ui.category;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

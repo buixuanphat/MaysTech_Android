@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/home" android:icon="@drawable/ic_home_selector" android:title="Trang chủ"/>
-    <item android:id="@+id/cart" android:icon="@drawable/ic_cart_selector" android:title="Giỏ hàng"/>
-    <item android:id="@+id/profile" android:icon="@drawable/ic_profile_selector" android:title="Hồ sơ"/>
+    <item android:id="@+id/home" android:icon="@drawable/selector_home" android:title="Trang chủ"/>
+    <item android:id="@+id/category" android:icon="@drawable/selector_category" android:title="Danh mục"/>
+    <item android:id="@+id/cart" android:icon="@drawable/selector_cart" android:title="Giỏ hàng"/>
+    <item android:id="@+id/profile" android:icon="@drawable/selector_profile" android:title="Hồ sơ"/>
 </menu>

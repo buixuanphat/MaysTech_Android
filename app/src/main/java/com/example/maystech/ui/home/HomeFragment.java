@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
         banners.add(new ProductHighlight(1, "https://cdnv2.tgdd.vn/mwg-static/common/News/1577815/IMG_4120.jpeg", 1));
         banners.add(new ProductHighlight(2, "https://macstores.vn/wp-content/uploads/2024/09/lenovo-thinkpad-x1-carbon-gen-13-3.jpg", 2));
 
-        ViewPager2 vpBanner = binding.vpProductHighlight;
+        ViewPager2 vpBanner = binding.vpBanner;
         BannerAdapter bannerAdapter = new BannerAdapter(banners);
         vpBanner.setAdapter(bannerAdapter);
 

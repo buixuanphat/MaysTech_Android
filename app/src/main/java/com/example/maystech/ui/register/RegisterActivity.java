@@ -1,4 +1,4 @@
-package com.example.maystech.ui.auth;
+package com.example.maystech.ui.register;
 
 import android.os.Bundle;
 
@@ -19,9 +19,6 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.cvRegister.setOnClickListener(v -> {
-            finish();
-        });
 
     }
 }
