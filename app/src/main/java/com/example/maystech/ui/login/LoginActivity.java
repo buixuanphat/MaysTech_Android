@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity implements LoginCallback {
         binding.setLoginViewModel(loginViewModel);
         binding.setLifecycleOwner(this);
 
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
 
     }
 
@@ -58,4 +60,6 @@ public class LoginActivity extends AppCompatActivity implements LoginCallback {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }
+
+
 }

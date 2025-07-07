@@ -1,26 +1,32 @@
 package com.example.maystech.ui.category;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.maystech.R;
 import com.example.maystech.data.model.Category;
 import com.example.maystech.databinding.ItemCategoryBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private List<Category> cats;
-    private Context context;
     private OnItemClickListener listener;
+    private int currentItemId = RecyclerView.NO_POSITION;
 
-    public CategoryAdapter(List<Category> cats, Context context, OnItemClickListener listener) {
-        this.cats = cats;
-        this.context = context;
+    public CategoryAdapter(OnItemClickListener listener) {
+        this.cats = new ArrayList<>();
         this.listener = listener;
     }
 
@@ -34,6 +40,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         holder.bind(cats.get(position));
+    }
+
+    public int getCurrentItemId() {
+        return currentItemId;
+    }
+    public void setCurrentItemId(int currentItemId) {
+        this.currentItemId = currentItemId;
     }
 
     @Override
@@ -52,11 +65,27 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             this.binding = binding;
         }
 
+        @SuppressLint("UseCompatLoadingForDrawables")
         void bind(Category cat)
         {
             binding.name.setText(cat.getName());
+            Context context = binding.getRoot().getContext();
+            if (cat.getId() == currentItemId) {
+                binding.name.setTextColor(context.getColor(R.color.white));
+                binding.background.setBackgroundDrawable(context.getDrawable(R.drawable.shape_layout_selected));
+
+            } else {
+                binding.name.setTextColor(context.getColor(R.color.dark_gray));
+                binding.background.setBackgroundDrawable(context.getDrawable(R.drawable.shape_layout_no_selected));
+
+            }
             binding.getRoot().setOnClickListener(v -> listener.onItemClick(cat));
         }
+    }
+
+    public void setData(List<Category> categories) {
+        this.cats = categories;
+        notifyDataSetChanged();
     }
 
 

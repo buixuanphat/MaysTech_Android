@@ -18,6 +18,11 @@
         android:id="@+id/cart"
         android:name="com.example.maystech.ui.cart.CartFragment"
         android:label="Giỏ hàng"/>
+    
+    <fragment
+        android:id="@+id/notification"
+        android:name="com.example.maystech.ui.notification.NotificationFragment"
+        android:label="Thông báo"/>
 
     <fragment
         android:id="@+id/profile"

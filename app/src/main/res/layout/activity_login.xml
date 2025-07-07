@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/tv_login"
-            style="@style/bold_text"
+            style="@style/text_bold"
             android:layout_marginHorizontal="16dp"
             android:text="Đăng nhập"
             android:textColor="@color/black"
@@ -33,29 +33,33 @@
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/normal_text"
+            style="@style/text_bold"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="10dp"
             android:text="Đăng nhập để tiếp tục"
-            app:layout_constraintTop_toBottomOf="@id/tv_login" />
+            app:layout_constraintTop_toBottomOf="@id/tv_login"
+            tools:ignore="MissingConstraints" />
 
 
         <TextView
             android:id="@+id/tv_email"
-            style="@style/normal_text"
+            style="@style/text_normal"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="6dp"
             android:text="Email"
             android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:ignore="MissingConstraints" />
 
         <LinearLayout
             android:id="@+id/ln_email"
-            style="@style/input_layout"
+            style="@style/layout_light_blue"
+            android:background="@drawable/shape_layout_rounded_10dp"
             android:layout_marginHorizontal="16dp"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/tv_email">
+            app:layout_constraintTop_toBottomOf="@id/tv_email"
+            tools:ignore="MissingConstraints">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -64,7 +68,7 @@
                 android:src="@drawable/ic_person_24px_filled" />
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/common_edittext"
+                style="@style/edittext_light_blue"
                 android:hint="Nhập email"
                 android:text="@={loginViewModel.email}"/>
 
@@ -72,20 +76,23 @@
 
         <TextView
             android:id="@+id/tv_password"
-            style="@style/normal_text"
+            style="@style/text_normal"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="6dp"
             android:text="Mật khẩu"
             android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/ln_email" />
+            app:layout_constraintTop_toBottomOf="@id/ln_email"
+            tools:ignore="MissingConstraints" />
 
         <LinearLayout
             android:id="@+id/ln_password"
-            style="@style/input_layout"
+            style="@style/layout_light_blue"
+            android:background="@drawable/shape_layout_rounded_10dp"
             android:layout_marginHorizontal="16dp"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/tv_password">
+            app:layout_constraintTop_toBottomOf="@id/tv_password"
+            tools:ignore="MissingConstraints">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -94,7 +101,7 @@
                 android:src="@drawable/ic_visibility_off_24px" />
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/common_edittext"
+                style="@style/edittext_light_blue"
                 android:hint="Nhập mật khẩu"
                 android:text="@={loginViewModel.password}"/>
 
@@ -113,14 +120,15 @@
             android:onClick="@{()->loginViewModel.onclickLogin()}"/>
 
         <TextView
-            style="@style/normal_text"
+            style="@style/text_normal"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:text="Tạo tài khoản mới"
             android:textColor="@color/colorPrimary"
             app:layout_constraintTop_toBottomOf="@id/btn_login"
-            android:onClick="@{()->loginViewModel.onclickRegister()}"/>
+            android:onClick="@{()->loginViewModel.onclickRegister()}"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

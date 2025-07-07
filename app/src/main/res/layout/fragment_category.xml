@@ -1,14 +1,113 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.category.CategoryFragment">
+    tools:context=".ui.category.CategoryFragment"
+    tools:openDrawer="end"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/ln_search"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_layout_rounded_horizontal"
+            android:backgroundTint="@color/grey"
+            android:padding="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_filter"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_search_24px" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/edittext_grey"
+                android:background="@drawable/shape_layout_rounded_horizontal"
+                android:hint="Tìm kiếm" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/iv_filter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_tune_24px"
+            android:background="@null"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints"
+            android:layout_marginTop="10dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_category"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_category"
+            app:layout_constraintTop_toBottomOf="@+id/ln_search"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_product"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/rv_category"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/shape_layout_grey"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/right_drawer"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_10h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.1"
+            android:orientation="horizontal"/>
+
+        <TextView
+            android:id="@+id/tv_brand"
+            style="@style/text_bold"
+            android:text="Thương hiệu"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/guideline_10h"
+            tools:ignore="MissingConstraints"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_brand"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="6dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

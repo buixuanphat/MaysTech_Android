@@ -9,34 +9,59 @@
         <item name="fontFamily">@font/montserrat_bold</item>
     </style>
 
-    <style name="common_edittext">
+    <style name="edittext_light_blue">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">10dp</item>
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/montserrat_regular</item>
-        <item name="android:background">@color/input</item>
+        <item name="android:background">@color/light_blue</item>
     </style>
 
-    <style name="input_layout">
+    <style name="edittext_grey">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">10dp</item>
-        <item name="android:background">@drawable/shape_layout_input</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/montserrat_regular</item>
+        <item name="android:background">@color/grey</item>
     </style>
 
-    <style name="normal_text">
+    <style name="layout_light_blue">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/shape_layout_rounded_10dp</item>
+        <item name="android:backgroundTint">@color/light_blue</item>
+    </style>
+
+    <style name="layout_grey">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/shape_layout_rounded_10dp</item>
+        <item name="android:backgroundTint">@color/grey</item>
+    </style>
+
+    <style name="text_normal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/montserrat_regular</item>
     </style>
 
-    <style name="bold_text">
+    <style name="text_bold">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="text_medium">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.CircularImageView" parent="">
@@ -44,23 +69,5 @@
         <item name="cornerSize">50%</item>
     </style>
 
-
-<!--    search-->
-    <style name="edittext_search">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">6dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="fontFamily">@font/montserrat_regular</item>
-        <item name="android:background">@color/gray</item>
-    </style>
-
-    <style name="layout_search">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">6dp</item>
-        <item name="android:backgroundTint">@color/gray</item>
-        <item name="android:background">@drawable/shape_layout_rounded_horizontal</item>
-    </style>
 
 </resources>

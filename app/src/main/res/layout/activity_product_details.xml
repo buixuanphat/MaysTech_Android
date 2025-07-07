@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.product_details.ProductDetailsActivity">
+
+    <data>
+        <variable
+            name="productDetailsViewModel"
+            type="com.example.maystech.ui.product_details.ProductDetailViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_image"
+                android:layout_width="match_parent"
+                android:layout_height="550dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/text_medium"
+                android:text="@{productDetailsViewModel.name}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/vp_image"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/text_bold"
+                android:text="@{productDetailsViewModel.price.toString()}"
+                android:textColor="@color/black"
+                android:textSize="22dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/tv_price" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                style="@style/text_normal"
+                android:text="@{productDetailsViewModel.description}"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
