@@ -2,10 +2,10 @@ package com.example.maystech.data.api;
 
 import java.util.List;
 
-public class ApiResponse <T>{
+public class ApiResponses<T> {
     private int statusCode;
     private String message;
-    T data;
+    private List<T> data;
 
     public int getStatusCode() {
         return statusCode;
@@ -15,7 +15,7 @@ public class ApiResponse <T>{
         return message;
     }
 
-    public T getData()
+    public List<T> getData()
     {
         return data;
     }

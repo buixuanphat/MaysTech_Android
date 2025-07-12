@@ -29,7 +29,8 @@
             android:text="Đăng nhập"
             android:textColor="@color/black"
             android:textSize="22sp"
-            app:layout_constraintTop_toTopOf="@id/guideline_10h" />
+            app:layout_constraintTop_toTopOf="@id/guideline_10h"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -116,8 +117,7 @@
             android:padding="10dp"
             android:text="Đăng nhập"
             app:cornerRadius="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/ln_password"
-            android:onClick="@{()->loginViewModel.onclickLogin()}"/>
+            app:layout_constraintTop_toBottomOf="@+id/ln_password" />
 
         <TextView
             style="@style/text_normal"
@@ -127,7 +127,6 @@
             android:text="Tạo tài khoản mới"
             android:textColor="@color/colorPrimary"
             app:layout_constraintTop_toBottomOf="@id/btn_login"
-            android:onClick="@{()->loginViewModel.onclickRegister()}"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

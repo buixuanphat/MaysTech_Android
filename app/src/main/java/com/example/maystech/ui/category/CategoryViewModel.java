@@ -6,14 +6,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.maystech.data.api.ApiResponse;
+import com.example.maystech.data.api.ApiResponses;
 import com.example.maystech.data.model.Brand;
 import com.example.maystech.data.model.Category;
 import com.example.maystech.data.model.Product;
-import com.example.maystech.data.model.ProductImage;
-import com.example.maystech.repository.CategoryRepository;
-import com.example.maystech.repository.ProductImageRepository;
-import com.example.maystech.repository.ProductRepository;
+import com.example.maystech.data.repository.BrandRepository;
+import com.example.maystech.data.repository.CategoryRepository;
+import com.example.maystech.data.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +24,7 @@ import retrofit2.Response;
 public class CategoryViewModel extends ViewModel {
     CategoryRepository categoryRepository;
     ProductRepository productRepository;
+    BrandRepository brandRepository;
     MutableLiveData<List<Category>> categories;
     MutableLiveData<List<Product>> products;
     MutableLiveData<List<Brand>> brands;
@@ -36,6 +36,7 @@ public class CategoryViewModel extends ViewModel {
         this.productRepository = new ProductRepository();
         this.products = new MutableLiveData<>();
 
+        this.brandRepository = new BrandRepository();
         this.brands = new MutableLiveData<>();
     }
 
@@ -56,9 +57,9 @@ public class CategoryViewModel extends ViewModel {
 
     public void fetchCategories(OnDataLoaded onDataLoaded)
     {
-        categoryRepository.getCategories(new Callback<ApiResponse<Category>>() {
+        categoryRepository.getCategories(new Callback<ApiResponses<Category>>() {
             @Override
-            public void onResponse(Call<ApiResponse<Category>> call, Response<ApiResponse<Category>> response) {
+            public void onResponse(Call<ApiResponses<Category>> call, Response<ApiResponses<Category>> response) {
                 if(response.isSuccessful())
                 {
                     categories.setValue(response.body().getData());
@@ -67,42 +68,25 @@ public class CategoryViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<Category>> call, Throwable t) {
+            public void onFailure(Call<ApiResponses<Category>> call, Throwable t) {
                 Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
     }
 
-    public void fetchProducts()
-    {
-        productRepository.getProducts(new Callback<ApiResponse<Product>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> response) {
-                if(response.isSuccessful())
-                {
-                    products.setValue(response.body().getData());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<Product>> call, Throwable t) {
-                Log.e("error", Objects.requireNonNull(t.getMessage()));
-            }
-        });
-    }
 
     public void fetchProductOfCategory(int catId)
     {
-        productRepository.getProductOfCategory(catId, new Callback<ApiResponse<Product>>() {
+        productRepository.getProductOfCategory(catId, new Callback<ApiResponses<Product>>() {
             @Override
-            public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> response) {
+            public void onResponse(Call<ApiResponses<Product>> call, Response<ApiResponses<Product>> response) {
                 if(response.isSuccessful()){
                     products.setValue(response.body().getData());
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<Product>> call, Throwable t) {
+            public void onFailure(Call<ApiResponses<Product>> call, Throwable t) {
                 Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
@@ -110,31 +94,31 @@ public class CategoryViewModel extends ViewModel {
 
     public void fetchBrandOfCategory(int catId)
     {
-        productRepository.getBrandOfCategory(catId, new Callback<ApiResponse<Brand>>() {
+        brandRepository.getBrandOfCategory(catId, new Callback<ApiResponses<Brand>>() {
             @Override
-            public void onResponse(Call<ApiResponse<Brand>> call, Response<ApiResponse<Brand>> response) {
+            public void onResponse(Call<ApiResponses<Brand>> call, Response<ApiResponses<Brand>> response) {
                 if(response.isSuccessful()){
                     brands.setValue(response.body().getData());
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<Brand>> call, Throwable t) {
+            public void onFailure(Call<ApiResponses<Brand>> call, Throwable t) {
                 Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
     }
 
-    public void fetProductOfCategoryAndBrand(int catId, int brandId)
+    public void fetchProductOfCategoryAndBrand(int catId, int brandId)
     {
-        productRepository.getProductOfCategoryAndBrand(catId, brandId, new Callback<ApiResponse<Product>>() {
+        productRepository.getProductOfCategoryAndBrand(catId, brandId, new Callback<ApiResponses<Product>>() {
             @Override
-            public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> response) {
+            public void onResponse(Call<ApiResponses<Product>> call, Response<ApiResponses<Product>> response) {
                 products.setValue(response.body().getData());
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<Product>> call, Throwable t) {
+            public void onFailure(Call<ApiResponses<Product>> call, Throwable t) {
                 Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });

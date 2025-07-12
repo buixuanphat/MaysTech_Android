@@ -2,22 +2,25 @@ package com.example.maystech.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.maystech.MainActivity;
 import com.example.maystech.R;
 import com.example.maystech.databinding.ActivityLoginBinding;
+import com.example.maystech.ui.product_details.ProductDetailViewModel;
 import com.example.maystech.ui.register.RegisterActivity;
 import com.example.maystech.ui.home.HomeFragment;
 
-public class LoginActivity extends AppCompatActivity implements LoginCallback {
+public class LoginActivity extends AppCompatActivity{
 
-    private LoginViewModel loginViewModel;
+    private LoginViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,33 +36,27 @@ public class LoginActivity extends AppCompatActivity implements LoginCallback {
             return insets;
         });
 
-        loginViewModel = new LoginViewModel(this);
-        binding.setLoginViewModel(loginViewModel);
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        binding.setLoginViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+
+        binding.btnLogin.setOnClickListener(v -> {
+            viewModel.login();
+        });
+
+        viewModel.getLoginStatus().observe(this, s -> {
+            if(s)
+            {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else
+            {
+                Toast.makeText(this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
-
-    @Override
-    public void loginSuccess() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        this.finish();
-    }
-
-    @Override
-    public void loginFailed() {
-        Intent intent = new Intent(LoginActivity.this, HomeFragment.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public void register() {
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
-    }
-
-
 }

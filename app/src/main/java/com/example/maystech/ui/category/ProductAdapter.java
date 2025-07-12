@@ -1,30 +1,17 @@
 package com.example.maystech.ui.category;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.maystech.data.api.ApiResponse;
 import com.example.maystech.data.model.Product;
-import com.example.maystech.data.model.ProductImage;
-import com.example.maystech.databinding.ItemCategoryBinding;
 import com.example.maystech.databinding.ItemProductBinding;
-import com.example.maystech.repository.ProductImageRepository;
-import com.example.maystech.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 

@@ -1,31 +1,27 @@
 package com.example.maystech.ui.category;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.maystech.data.model.Brand;
 import com.example.maystech.data.model.Category;
 import com.example.maystech.data.model.Product;
 import com.example.maystech.databinding.FragmentCategoryBinding;
+import com.example.maystech.ui.product_details.ProductDetailsActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryFragment extends Fragment {
@@ -49,9 +45,9 @@ public class CategoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Get categories
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        Intent intent = new Intent(requireContext(), ProductDetailsActivity.class);
 
+        //Get categories
         viewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
 
         adapter = new CategoryAdapter( new CategoryAdapter.OnItemClickListener() {
@@ -73,6 +69,7 @@ public class CategoryFragment extends Fragment {
         });
 
         binding.rvCategory.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.rvCategory.setLayoutManager(linearLayoutManager);
 
         viewModel.getCategories().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
@@ -100,7 +97,8 @@ public class CategoryFragment extends Fragment {
         productAdapter = new ProductAdapter(new ProductAdapter.OnClickProduct() {
             @Override
             public void onClickProduct(Product p) {
-
+                intent.putExtra("prodId", p.getId());
+                startActivity(intent);
             }
         });
         binding.rvProduct.setAdapter(productAdapter);
@@ -130,7 +128,7 @@ public class CategoryFragment extends Fragment {
         BrandAdapter brandAdapter = new BrandAdapter(new BrandAdapter.OnBrandClick() {
             @Override
             public void onBrandClick(Brand brand) {
-                viewModel.fetProductOfCategoryAndBrand(currentCat, brand.getId());
+                viewModel.fetchProductOfCategoryAndBrand(currentCat, brand.getId());
                 drawerLayout.closeDrawer(GravityCompat.END);
             }
         });
