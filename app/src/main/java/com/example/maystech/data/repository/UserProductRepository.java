@@ -1,43 +1,44 @@
 package com.example.maystech.data.repository;
 
+import com.example.maystech.data.STATIC;
 import com.example.maystech.data.api.ApiClient;
 import com.example.maystech.data.api.ApiResponse;
-import com.example.maystech.data.api.ApiResponses;
 import com.example.maystech.data.api.ApiService;
 import com.example.maystech.data.model.AddToCartRequest;
 import com.example.maystech.data.model.ItemProduct;
-import com.example.maystech.data.model.Product;
 import com.example.maystech.data.model.TotalCart;
+
+import java.util.List;
 
 import retrofit2.Callback;
 
 public class UserProductRepository {
     ApiService apiService = ApiClient.getRetrofit().create(ApiService.class);
 
-    public void addProductToCart(int userId, int prodId ,Callback<ApiResponse<ItemProduct>> callback)
+    public void addProductToCart(String token, int userId, int prodId ,Callback<ApiResponse<ItemProduct>> callback)
     {
         AddToCartRequest addToCartRequest = new AddToCartRequest(userId, prodId);
-        apiService.addProductToCart(addToCartRequest).enqueue(callback);
+        apiService.addProductToCart(token ,addToCartRequest).enqueue(callback);
     }
 
-    public void getProductInCart(int userId, Callback<ApiResponses<ItemProduct>> callback)
+    public void getProductInCart(String token ,int userId, Callback<ApiResponse<List<ItemProduct>>> callback)
     {
-        apiService.getProductInCart(userId).enqueue(callback);
+        apiService.getProductInCart(token, userId).enqueue(callback);
     }
 
-    public void deleteProductFromCart(int id, Callback<ApiResponses> callback)
+    public void deleteProductFromCart(String token ,int id, Callback<ApiResponse> callback)
     {
-        apiService.deleteProductFromCart(id).enqueue(callback);
+        apiService.deleteProductFromCart(id, token).enqueue(callback);
     }
 
-    public void getTotalCart(int userId, Callback<ApiResponse<TotalCart>> callback)
+    public void getTotalCart(String token, int userId, Callback<ApiResponse<TotalCart>> callback)
     {
-        apiService.getTotalCart(userId).enqueue(callback);
+        apiService.getTotalCart(userId, token).enqueue(callback);
     }
 
-    public void choose(int id, int isChosen, Callback<ApiResponse> callback )
+    public void choose(String token ,int id, int isChosen, Callback<ApiResponse> callback )
     {
-        apiService.choose(id, isChosen).enqueue(callback);
+        apiService.choose(id, isChosen, token).enqueue(callback);
     }
 
 }

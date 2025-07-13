@@ -14,6 +14,9 @@ import com.example.maystech.data.model.User;
 import com.example.maystech.data.model.Ward;
 import com.google.gson.JsonObject;
 
+import java.util.List;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -28,20 +31,20 @@ import retrofit2.http.Query;
 public interface ApiService {
     // categories
     @GET("categories")
-    Call<ApiResponses<Category>> getCategories();
+    Call<ApiResponse<List<Category>>> getCategories();
 
 
 
 
     //products
     @GET("products")
-    Call<ApiResponses<Product>> getProducts();
+    Call<ApiResponse<List<Product>>> getProducts();
 
     @GET("products/category/{catId}")
-    Call<ApiResponses<Product>> getProductOfCategory(@Path("catId") int catId);
+    Call<ApiResponse<List<Product>>> getProductOfCategory(@Path("catId") int catId);
 
     @GET("products/category/{catId}/brand/{brandId}")
-    Call<ApiResponses<Product>> getProductOfCategoryAndBrand(@Path("catId") int catId, @Path("brandId") int brandId);
+    Call<ApiResponse<List<Product>>> getProductOfCategoryAndBrand(@Path("catId") int catId, @Path("brandId") int brandId);
 
 
     @GET("products/{prodId}")
@@ -52,32 +55,49 @@ public interface ApiService {
 
     // product-image
     @GET("product-image/{prodId}")
-    Call<ApiResponses<ProductImage>> getImageOfProduct(@Path("prodId") int prodId);
+    Call<ApiResponse<List<ProductImage>>> getImageOfProduct(@Path("prodId") int prodId);
 
 
 
 
     // brand
     @GET("brand-category/{catId}")
-    Call<ApiResponses<Brand>> getBrandsOfCategory(@Path("catId") int catId);
+    Call<ApiResponse<List<Brand>>> getBrandsOfCategory(@Path("catId") int catId);
 
 
 
-    // user-product
+    // === USER-PRODUCT
     @POST("user-product")
-    Call<ApiResponse<ItemProduct>> addProductToCart(@Body AddToCartRequest request);
+    Call<ApiResponse<ItemProduct>> addProductToCart(
+            @Header("Authorization") String token,
+            @Body AddToCartRequest request
+    );
 
     @GET("user-product/{userId}")
-    Call<ApiResponses<ItemProduct>> getProductInCart(@Path("userId") int userId);
+    Call<ApiResponse<List<ItemProduct>>> getProductInCart(
+            @Header("Authorization") String token,
+            @Path("userId") int userId
+
+    );
 
     @DELETE("user-product/{id}")
-    Call<ApiResponses> deleteProductFromCart(@Path("id") int id);
+    Call<ApiResponse> deleteProductFromCart(
+            @Path("id") int id,
+            @Header("Authorization") String token
+            );
 
     @GET("user-product/total/{userId}")
-    Call<ApiResponse<TotalCart>> getTotalCart(@Path("userId") int userId);
+    Call<ApiResponse<TotalCart>> getTotalCart(
+            @Path("userId") int userId,
+            @Header("Authorization") String token
+            );
 
     @PATCH("user-product/{id}")
-    Call <ApiResponse> choose(@Path("id") int id, @Query("isChosen") int isChosen);
+    Call <ApiResponse> choose(
+            @Path("id") int id,
+            @Query("isChosen") int isChosen,
+            @Header("Authorization") String token
+            );
 
 
     // === GHN ===
@@ -104,5 +124,10 @@ public interface ApiService {
     @POST("auth/login")
     Call<ApiResponse<String>> login(@Body JsonObject body);
 
+    @GET("auth/me")
+    Call<ApiResponse<User>> getCurrentUser(@Header("Authorization") String token );
+
+    @POST("auth/register")
+    Call<ApiResponse<User>> register (@Body Map<String, String> body);
 
 }

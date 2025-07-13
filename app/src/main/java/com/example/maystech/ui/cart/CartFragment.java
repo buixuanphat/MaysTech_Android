@@ -20,7 +20,9 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.example.maystech.R;
+import com.example.maystech.data.SharedPrefManager;
 import com.example.maystech.data.model.ItemProduct;
+import com.example.maystech.data.model.User;
 import com.example.maystech.databinding.FragmentCartBinding;
 import com.example.maystech.databinding.ItemProductCartBinding;
 import com.example.maystech.ui.product_details.ProductDetailsActivity;
@@ -46,18 +48,23 @@ public class CartFragment extends Fragment {
         binding = FragmentCartBinding.inflate(LayoutInflater.from(container.getContext()), container, false);
         viewModel = new CartViewModel();
 
+        SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(requireContext());
+        User user = sharedPrefManager.getUserInfo();
+        String token = "Bearer "+ sharedPrefManager.getToken();
+        int id = user.getId();
+
         RecyclerView rvProduct = binding.rvProducts;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext() ,LinearLayoutManager.VERTICAL, false);
         rvProduct.setLayoutManager(linearLayoutManager);
         productCartAdapter = new ProductCartAdapter(new ProductCartAdapter.OnClick() {
             @Override
             public void onAdd(ItemProduct itemProduct) {
-                viewModel.addProductToCart(1, itemProduct.getProdId());
+                viewModel.addProductToCart(token, id, itemProduct.getProdId());
             }
 
             @Override
             public void onRemove(ItemProduct itemProduct) {
-                viewModel.deleteProductFromCart(itemProduct.getId());
+                viewModel.deleteProductFromCart(token, itemProduct.getId());
             }
 
             @Override
@@ -71,18 +78,18 @@ public class CartFragment extends Fragment {
             public void onCheck(CheckBox cb, ItemProduct itemProduct) {
                 if(!cb.isChecked())
                 {
-                    viewModel.choose(itemProduct.getId(), 0);
+                    viewModel.choose( token,itemProduct.getId(), 0);
                 }
                 else
                 {
-                    viewModel.choose(itemProduct.getId(), 1);
+                    viewModel.choose(token ,itemProduct.getId(), 1);
                 }
             }
         });
         rvProduct.setAdapter(productCartAdapter);
 
-        viewModel.getProductInCart(1);
-        viewModel.getTotalCart(1);
+        viewModel.getProductInCart(token,id);
+        viewModel.getTotalCart(token, id);
 
         viewModel.getProducts().observe(getViewLifecycleOwner(), products -> {
             productCartAdapter.setData(products);

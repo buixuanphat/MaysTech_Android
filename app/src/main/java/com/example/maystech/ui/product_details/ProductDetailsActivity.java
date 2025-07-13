@@ -16,7 +16,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.maystech.R;
+import com.example.maystech.data.SharedPrefManager;
 import com.example.maystech.data.model.Category;
+import com.example.maystech.data.model.User;
 import com.example.maystech.databinding.ActivityMainBinding;
 import com.example.maystech.databinding.ActivityProductDetailsBinding;
 import com.example.maystech.ui.category.CategoryViewModel;
@@ -42,6 +44,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         binding.setProductDetailsViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
+        SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(this);
+        User user = sharedPrefManager.getUserInfo();
+        String token = "Bearer "+ sharedPrefManager.getToken();
+        int id = user.getId();
+
         Intent intent = getIntent();
         prodId = intent.getIntExtra("prodId", -1);
 
@@ -56,7 +63,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         // add to cart
         binding.btnOrder.setOnClickListener(v -> {
-            viewModel.addProductToCart(1, prodId);
+            viewModel.addProductToCart(token, id, prodId);
         });
 
 

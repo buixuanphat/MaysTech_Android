@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.maystech.data.api.ApiResponses;
+import com.example.maystech.data.api.ApiResponse;
 import com.example.maystech.data.model.Brand;
 import com.example.maystech.data.model.Category;
 import com.example.maystech.data.model.Product;
@@ -57,9 +57,9 @@ public class CategoryViewModel extends ViewModel {
 
     public void fetchCategories(OnDataLoaded onDataLoaded)
     {
-        categoryRepository.getCategories(new Callback<ApiResponses<Category>>() {
+        categoryRepository.getCategories(new Callback<ApiResponse<List<Category>>>() {
             @Override
-            public void onResponse(Call<ApiResponses<Category>> call, Response<ApiResponses<Category>> response) {
+            public void onResponse(Call<ApiResponse<List<Category>>> call, Response<ApiResponse<List<Category>>> response) {
                 if(response.isSuccessful())
                 {
                     categories.setValue(response.body().getData());
@@ -68,7 +68,7 @@ public class CategoryViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<ApiResponses<Category>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<Category>>> call, Throwable t) {
                 Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
@@ -77,16 +77,16 @@ public class CategoryViewModel extends ViewModel {
 
     public void fetchProductOfCategory(int catId)
     {
-        productRepository.getProductOfCategory(catId, new Callback<ApiResponses<Product>>() {
+        productRepository.getProductOfCategory(catId, new Callback<ApiResponse<List<Product>>>() {
             @Override
-            public void onResponse(Call<ApiResponses<Product>> call, Response<ApiResponses<Product>> response) {
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 if(response.isSuccessful()){
                     products.setValue(response.body().getData());
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponses<Product>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
                 Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
@@ -94,16 +94,16 @@ public class CategoryViewModel extends ViewModel {
 
     public void fetchBrandOfCategory(int catId)
     {
-        brandRepository.getBrandOfCategory(catId, new Callback<ApiResponses<Brand>>() {
+        brandRepository.getBrandOfCategory(catId, new Callback<ApiResponse<List<Brand>>>() {
             @Override
-            public void onResponse(Call<ApiResponses<Brand>> call, Response<ApiResponses<Brand>> response) {
+            public void onResponse(Call<ApiResponse<List<Brand>>> call, Response<ApiResponse<List<Brand>>> response) {
                 if(response.isSuccessful()){
                     brands.setValue(response.body().getData());
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponses<Brand>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<Brand>>> call, Throwable t) {
                 Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
@@ -111,14 +111,14 @@ public class CategoryViewModel extends ViewModel {
 
     public void fetchProductOfCategoryAndBrand(int catId, int brandId)
     {
-        productRepository.getProductOfCategoryAndBrand(catId, brandId, new Callback<ApiResponses<Product>>() {
+        productRepository.getProductOfCategoryAndBrand(catId, brandId, new Callback<ApiResponse<List<Product>>>() {
             @Override
-            public void onResponse(Call<ApiResponses<Product>> call, Response<ApiResponses<Product>> response) {
+            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
                 products.setValue(response.body().getData());
             }
 
             @Override
-            public void onFailure(Call<ApiResponses<Product>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
                 Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });

@@ -7,12 +7,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.maystech.data.api.ApiResponse;
-import com.example.maystech.data.api.ApiResponses;
 import com.example.maystech.data.model.ItemProduct;
 import com.example.maystech.data.model.TotalCart;
 import com.example.maystech.data.repository.UserProductRepository;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -47,33 +46,34 @@ public class CartViewModel extends ViewModel {
         return this.addToCartMessage;
     }
 
-    public void getProductInCart(int userId)
+    public void getProductInCart(String token ,int userId)
     {
-        userProductRepository.getProductInCart(userId, new Callback<ApiResponses<ItemProduct>>() {
+        userProductRepository.getProductInCart(token ,userId, new Callback<ApiResponse<List<ItemProduct>>>() {
             @Override
-            public void onResponse(Call<ApiResponses<ItemProduct>> call, Response<ApiResponses<ItemProduct>> response) {
+            public void onResponse(Call<ApiResponse<List<ItemProduct>>> call, Response<ApiResponse<List<ItemProduct>>> response) {
                 if(response.isSuccessful())
                 {
                     products.setValue(response.body().getData());
+
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponses<ItemProduct>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<ItemProduct>>> call, Throwable t) {
                 Log.e("error", t.getMessage());
             }
         });
     }
 
-    public void addProductToCart(int userId, int catId)
+    public void addProductToCart(String token ,int userId, int catId)
     {
-        userProductRepository.addProductToCart(userId, catId, new Callback<ApiResponse<ItemProduct>>() {
+        userProductRepository.addProductToCart(token,userId, catId, new Callback<ApiResponse<ItemProduct>>() {
             @Override
             public void onResponse(Call<ApiResponse<ItemProduct>> call, Response<ApiResponse<ItemProduct>> response) {
                 if (response.isSuccessful()) {
                     addToCartMessage.setValue("Thêm sản phẩm vào giỏ hàng thành công");
-                    getProductInCart(userId);
-                    getTotalCart(userId);
+                    getProductInCart(token, userId);
+                    getTotalCart(token ,userId);
                 }
             }
 
@@ -84,27 +84,27 @@ public class CartViewModel extends ViewModel {
         });
     }
 
-    public void deleteProductFromCart(int id) {
-        userProductRepository.deleteProductFromCart(id, new Callback<ApiResponses>() {
+    public void deleteProductFromCart(String token ,int id) {
+        userProductRepository.deleteProductFromCart(token, id, new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<ApiResponses> call, Response<ApiResponses> response) {
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful()) {
                     addToCartMessage.setValue("Xóa sản phẩm khỏi giỏ hàng thành công");
-                    getProductInCart(1);
-                    getTotalCart(1);
+                    getProductInCart(token,1);
+                    getTotalCart(token,1);
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponses> call, Throwable t) {
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
                 addToCartMessage.setValue(t.getMessage());
             }
         });
     }
 
-    public void getTotalCart(int userId)
+    public void getTotalCart(String token ,int userId)
     {
-        userProductRepository.getTotalCart(userId, new Callback<ApiResponse<TotalCart>>() {
+        userProductRepository.getTotalCart(token ,userId, new Callback<ApiResponse<TotalCart>>() {
             @Override
             public void onResponse(Call<ApiResponse<TotalCart>> call, Response<ApiResponse<TotalCart>> response) {
                 if(response.isSuccessful())
@@ -120,15 +120,15 @@ public class CartViewModel extends ViewModel {
         });
     }
 
-    public void choose(int id, int isChosen)
+    public void choose(String token ,int id, int isChosen)
     {
-        userProductRepository.choose(id, isChosen, new Callback<ApiResponse>() {
+        userProductRepository.choose(token , id, isChosen, new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if(response.isSuccessful())
                 {
-                    getTotalCart(1);
-                    getProductInCart(1);
+                    getTotalCart(token, 1);
+                    getProductInCart(token, 1);
                 }
             }
 

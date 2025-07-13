@@ -120,6 +120,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ln_password" />
 
         <TextView
+            android:id="@+id/tv_register"
             style="@style/text_normal"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="30dp"

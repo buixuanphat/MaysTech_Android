@@ -6,6 +6,8 @@ import com.example.maystech.data.api.ApiService;
 import com.example.maystech.data.model.User;
 import com.google.gson.JsonObject;
 
+import java.util.Map;
+
 import retrofit2.Callback;
 
 public class UserRepository {
@@ -14,6 +16,16 @@ public class UserRepository {
     public void login(JsonObject body, Callback<ApiResponse<String>> callback)
     {
         apiService.login(body).enqueue(callback);
+    }
+
+    public void getCurrentUser(String token, Callback<ApiResponse<User>> callback)
+    {
+        apiService.getCurrentUser(token).enqueue(callback);
+    }
+
+    public void register (Map<String, String> body, Callback<ApiResponse<User>> callback)
+    {
+        apiService.register(body).enqueue(callback);
     }
 
 }
