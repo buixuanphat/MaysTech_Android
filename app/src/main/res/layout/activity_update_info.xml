@@ -1,79 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.UpdateInfo.UpdateInfoActivity">
+    android:id="@+id/main">
 
-    <TextView
-        android:id="@+id/tv_tittle_phone_number"
-        style="@style/text_normal"
-        android:text="Số điện thoại" />
+    <data>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_phone_number"
-        style="@style/edittext_grey"
-        android:hint="Số điện thoại"
-        android:background="@drawable/shape_layout_rounded_10dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tittle_phone_number"
-        />
+        <variable
+            name="updateInfoViewModel"
+            type="com.example.maystech.ui.update_info.UpdateInfoViewModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/tv_tittle_province"
-        style="@style/text_normal"
-        android:text="Tỉnh/Thành phố"
-        app:layout_constraintTop_toBottomOf="@+id/edt_phone_number"/>
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner_province"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tittle_province"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/tv_tittle_district"
-        style="@style/text_normal"
-        android:text="Quận/Huyện"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_province"/>
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner_district"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tittle_district"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/tv_tittle_ward"
-        style="@style/text_normal"
-        android:text="Phường/Xã"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_district"/>
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner_ward"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tittle_ward"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        tools:context=".ui.update_info.UpdateInfoActivity">
 
 
-    <TextView
-        android:id="@+id/tv_tittle_details"
-        style="@style/text_normal"
-        android:text="Tên đường, Tòa nhà, Số nhà"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_ward"/>
+        <TextView
+            android:id="@+id/tv_logout"
+            style="@style/text_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/shape_layout_rounded_10dp"
+            android:backgroundTint="@color/red_50"
+            android:padding="8dp"
+            android:text="Đăng xuất"
+            android:textColor="@android:color/holo_red_light"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_details"
-        style="@style/edittext_grey"
-        android:hint="Tên đường, Số nhà, Tòa nhà"
-        android:background="@drawable/shape_layout_rounded_10dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tittle_details"
-        />
+        <LinearLayout
+            android:id="@+id/ln_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_logout">
 
-    <com.google.android.material.button.MaterialButton
-        style="@style/blue_button"
-        android:layout_width="match_parent"
-        android:text="Lưu"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_tittle_phone_number"
+                style="@style/text_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:paddingHorizontal="6dp"
+                android:text="Số điện thoại"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_phone_number"
+                style="@style/edittext_grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/shape_layout_rounded_10dp"
+                android:backgroundTint="@color/grey"
+                android:hint="Số điện thoại" />
+
+            <TextView
+                android:id="@+id/tv_tittle_details"
+                style="@style/text_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="6dp"
+                android:text="Tên đường, Tòa nhà, Số nhà"
+                android:textSize="12sp" />
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_address_details"
+                style="@style/edittext_grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/shape_layout_rounded_10dp"
+                android:backgroundTint="@color/grey"
+                android:hint="Tên đường, Số nhà, Tòa nhà" />
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="6dp"
+                android:text="Tỉnh/Thành phố, Quận/Huyện, Phường/Xã"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/ln_general_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_province"
+                    style="@style/text_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingHorizontal="6dp"
+                    android:text="Tỉnh/Thành phố" />
+
+                <TextView
+                    android:id="@+id/tv_district"
+                    style="@style/text_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+
+                    android:paddingHorizontal="6dp"
+                    android:text="Quận/Huyện" />
+
+                <TextView
+                    android:id="@+id/tv_ward"
+                    style="@style/text_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+
+                    android:paddingHorizontal="6dp"
+                    android:text="Phường/Xã" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ln_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:id="@+id/tv_label_province"
+                    style="@style/text_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="6dp"
+                    android:text="Tỉnh/Thành phố"
+                    android:textSize="12sp" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_province"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="@drawable/shape_layout_rounded_10dp"
+                    android:backgroundTint="@color/grey" />
+
+                <TextView
+                    android:id="@+id/tv_label_district"
+                    style="@style/text_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="6dp"
+                    android:text="Quận/Huyện"
+                    android:textSize="12sp" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_district"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="@drawable/shape_layout_rounded_10dp"
+                    android:backgroundTint="@color/grey" />
+
+
+                <TextView
+                    android:id="@+id/tv_label_ward"
+                    style="@style/text_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="6dp"
+                    android:text="Phường/Xã"
+                    android:textSize="12sp" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_ward"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="@drawable/shape_layout_rounded_10dp"
+                    android:backgroundTint="@color/grey" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_info"
+            style="@style/blue_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Lưu"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

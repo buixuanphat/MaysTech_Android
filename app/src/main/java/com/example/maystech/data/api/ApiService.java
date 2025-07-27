@@ -1,11 +1,13 @@
 package com.example.maystech.data.api;
 
-import com.example.maystech.data.STATIC;
+import com.example.maystech.data.model.ItemProductOrder;
+import com.example.maystech.utils.STATIC;
 import com.example.maystech.data.model.AddToCartRequest;
 import com.example.maystech.data.model.Brand;
 import com.example.maystech.data.model.Category;
+import com.example.maystech.data.model.Delivery;
 import com.example.maystech.data.model.District;
-import com.example.maystech.data.model.ItemProduct;
+import com.example.maystech.data.model.ItemProductInCart;
 import com.example.maystech.data.model.Product;
 import com.example.maystech.data.model.ProductImage;
 import com.example.maystech.data.model.Province;
@@ -68,13 +70,13 @@ public interface ApiService {
 
     // === USER-PRODUCT
     @POST("user-product")
-    Call<ApiResponse<ItemProduct>> addProductToCart(
+    Call<ApiResponse<ItemProductInCart>> addProductToCart(
             @Header("Authorization") String token,
             @Body AddToCartRequest request
     );
 
     @GET("user-product/{userId}")
-    Call<ApiResponse<List<ItemProduct>>> getProductInCart(
+    Call<ApiResponse<List<ItemProductInCart>>> getProductInCart(
             @Header("Authorization") String token,
             @Path("userId") int userId
 
@@ -102,9 +104,7 @@ public interface ApiService {
 
     // === GHN ===
     @GET("master-data/province")
-    @Headers({
-            "Token: "+ STATIC.TOKEN
-    })
+    @Headers({"Token: "+ STATIC.TOKEN})
     Call<GhnApiResponse<Province>> getProvince();
 
     @POST("master-data/district")
@@ -130,4 +130,22 @@ public interface ApiService {
     @POST("auth/register")
     Call<ApiResponse<User>> register (@Body Map<String, String> body);
 
+    @PATCH("users/{userId}")
+    Call<ApiResponse<User>> updateInfo (@Header("Authorization") String token, @Body JsonObject body, @Path("userId") int userId);
+
+
+
+    // === DELIVERY ===
+    @GET("deliveries/{userId}")
+    Call<ApiResponse<List<Delivery>>> getDeliveryList(@Header("Authorization") String token, @Path("userId") int userId, @Query("status") String status);
+
+    @POST("deliveries")
+    Call<ApiResponse<Delivery>> addDelivery(@Body JsonObject body);
+
+    // === DELIVERY DETAILS ===
+    @GET("delivery-details/{deliveryId}")
+    Call<ApiResponse<List<ItemProductOrder>>> getProductInDelivery(@Path("deliveryId") int deliveryId);
+
+    @POST("delivery-details/{deliveryId}")
+    Call<ApiResponse<List<ItemProductOrder>>> addProductToDelivery (@Body List<ItemProductOrder> body);
 }

@@ -25,6 +25,7 @@
         <TextView
             android:id="@+id/tv_login"
             style="@style/text_bold"
+            android:layout_width="match_parent"
             android:layout_marginHorizontal="16dp"
             android:text="Đăng nhập"
             android:textColor="@color/black"
@@ -35,6 +36,7 @@
         <TextView
             android:id="@+id/tv_title"
             style="@style/text_bold"
+            android:layout_width="match_parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="10dp"
             android:text="Đăng nhập để tiếp tục"
@@ -45,6 +47,7 @@
         <TextView
             android:id="@+id/tv_email"
             style="@style/text_normal"
+            android:layout_width="match_parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="6dp"
@@ -78,6 +81,7 @@
         <TextView
             android:id="@+id/tv_password"
             style="@style/text_normal"
+            android:layout_width="match_parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="6dp"
@@ -122,6 +126,7 @@
         <TextView
             android:id="@+id/tv_register"
             style="@style/text_normal"
+            android:layout_width="match_parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="30dp"
             android:gravity="center"

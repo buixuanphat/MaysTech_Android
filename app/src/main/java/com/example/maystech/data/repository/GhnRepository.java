@@ -1,5 +1,5 @@
 package com.example.maystech.data.repository;
-import com.example.maystech.data.STATIC;
+import com.example.maystech.utils.STATIC;
 import com.example.maystech.data.api.ApiService;
 import com.example.maystech.data.api.GhnApiClient;
 import com.example.maystech.data.api.GhnApiResponse;

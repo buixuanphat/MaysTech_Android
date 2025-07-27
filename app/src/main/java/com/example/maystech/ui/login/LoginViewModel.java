@@ -1,26 +1,16 @@
 package com.example.maystech.ui.login;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
 import androidx.databinding.ObservableField;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.maystech.BR;
-import com.example.maystech.data.STATIC;
-import com.example.maystech.data.SharedPrefManager;
 import com.example.maystech.data.api.ApiResponse;
 import com.example.maystech.data.model.User;
 import com.example.maystech.data.repository.UserRepository;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;

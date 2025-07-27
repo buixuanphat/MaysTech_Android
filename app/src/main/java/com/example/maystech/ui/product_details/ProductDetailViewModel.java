@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.maystech.data.api.ApiResponse;
-import com.example.maystech.data.model.ItemProduct;
+import com.example.maystech.data.model.ItemProductInCart;
 import com.example.maystech.data.model.Product;
 import com.example.maystech.data.model.ProductImage;
 import com.example.maystech.data.repository.ProductImageRepository;
@@ -99,14 +99,14 @@ public class ProductDetailViewModel extends ViewModel {
 
     public void addProductToCart(String token ,int userId, int prodId)
     {
-        userProductRepository.addProductToCart(token , userId, prodId, new Callback<ApiResponse<ItemProduct>>() {
+        userProductRepository.addProductToCart(token , userId, prodId, new Callback<ApiResponse<ItemProductInCart>>() {
             @Override
-            public void onResponse(Call<ApiResponse<ItemProduct>> call, Response<ApiResponse<ItemProduct>> response) {
+            public void onResponse(Call<ApiResponse<ItemProductInCart>> call, Response<ApiResponse<ItemProductInCart>> response) {
                 if(response.isSuccessful()) addToCartMessage.setValue("Thêm sản phẩm vào giỏ hàng thành công");
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<ItemProduct>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<ItemProductInCart>> call, Throwable t) {
                 addToCartMessage.setValue(t.getMessage());
             }
         });

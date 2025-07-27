@@ -17,6 +17,7 @@
 
         <TextView
             android:id="@+id/tv_hello"
+            android:layout_width="match_parent"
             style="@style/text_bold"
             android:text="Xin chào!"
             android:textColor="@color/black"
@@ -25,6 +26,7 @@
         <TextView
             style="@style/text_bold"
             android:text="User"
+            android:layout_width="match_parent"
             android:textSize="22sp"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/tv_hello"
@@ -69,6 +71,7 @@
     <TextView
         android:id="@+id/tv_banner"
         style="@style/text_normal"
+        android:layout_width="match_parent"
         android:layout_marginHorizontal="16dp"
         android:text="Nổi bậc"
         android:textSize="26sp"

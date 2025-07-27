@@ -1,12 +1,9 @@
-package com.example.maystech.data;
+package com.example.maystech.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.example.maystech.data.model.User;
-
-import java.util.Map;
 
 public class SharedPrefManager {
     private static SharedPrefManager instance;
@@ -48,6 +45,8 @@ public class SharedPrefManager {
         editor.putInt(STATIC.KEY_DISTRICT_ID, user.getDistrictId());
         editor.putInt(STATIC.KEY_WARD_ID, user.getWardId());
         editor.putString(STATIC.KEY_PHONE_NUMBER, user.getPhoneNumber());
+        editor.putString(STATIC.KEY_USERNAME, user.getUsername());
+        editor.putString(STATIC.KEY_AVATAR, user.getAvatar());
         editor.commit();
     }
 
@@ -64,6 +63,8 @@ public class SharedPrefManager {
         user.setDistrictId(sharedPreferences.getInt(STATIC.KEY_DISTRICT_ID, 0));
         user.setWardId(sharedPreferences.getInt(STATIC.KEY_WARD_ID, 0));
         user.setPhoneNumber(sharedPreferences.getString(STATIC.KEY_PHONE_NUMBER, ""));
+        user.setUsername(sharedPreferences.getString(STATIC.KEY_USERNAME, ""));
+        user.setAvatar(sharedPreferences.getString(STATIC.KEY_AVATAR, ""));
         return user;
     }
 

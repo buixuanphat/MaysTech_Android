@@ -2,8 +2,6 @@ package com.example.maystech.ui.product_details;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -11,19 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.maystech.R;
-import com.example.maystech.data.SharedPrefManager;
-import com.example.maystech.data.model.Category;
+import com.example.maystech.utils.SharedPrefManager;
 import com.example.maystech.data.model.User;
-import com.example.maystech.databinding.ActivityMainBinding;
 import com.example.maystech.databinding.ActivityProductDetailsBinding;
-import com.example.maystech.ui.category.CategoryViewModel;
-
-import java.util.List;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     ProductDetailViewModel viewModel;

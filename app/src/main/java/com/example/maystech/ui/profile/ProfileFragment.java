@@ -9,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.maystech.MainActivity;
-import com.example.maystech.R;
-import com.example.maystech.data.SharedPrefManager;
+import com.example.maystech.utils.SharedPrefManager;
 import com.example.maystech.databinding.FragmentProfileBinding;
-import com.example.maystech.ui.UpdateInfo.UpdateInfoActivity;
-import com.example.maystech.ui.login.LoginActivity;
+import com.example.maystech.ui.update_info.UpdateInfoActivity;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class ProfileFragment extends Fragment {
 
@@ -33,14 +31,29 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
 
+        ViewPagerAdapter adapter = new ViewPagerAdapter(requireActivity());
+        binding.vpOrderStatus.setAdapter(adapter);
 
-        binding.btnLogout.setOnClickListener(v -> {
-            sharedPrefManager.clearAll();
-            Intent intent = new Intent(requireContext(), LoginActivity.class);
-            startActivity(intent);
-            requireActivity().finish();
-        });
+        new TabLayoutMediator(binding.tlTabLayout, binding.vpOrderStatus, (tab, position) ->
+        {
+            switch (position) {
+                case 0:
+                    tab.setText("Đang chuẩn bị");
+                    break;
+                case 1:
+                    tab.setText("Đang vận chuyển");
+                    break;
+                case 2:
+                    tab.setText("Đã nhận");
+                    break;
+                case 3:
+                    tab.setText("Đã huỷ");
+                    break;
+            }
+        }).attach();
+
 
         return binding.getRoot();
     }
+
 }

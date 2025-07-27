@@ -17,6 +17,7 @@
     <TextView
         android:id="@+id/tv_amount_total_chosen"
         android:text="Đã chọn 0"
+        android:layout_width="match_parent"
         style="@style/text_normal"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="6dp"
@@ -25,6 +26,7 @@
     <TextView
         android:id="@+id/tv_price_total_chosen"
         android:text="0"
+        android:layout_width="match_parent"
         style="@style/text_bold"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="6dp"
@@ -36,7 +38,7 @@
         android:id="@+id/btn_order"
         android:layout_width="match_parent"
         style="@style/blue_button"
-        android:text="Mua hàng"
+        android:text="Mua"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="12dp"

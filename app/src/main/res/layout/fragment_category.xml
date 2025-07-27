@@ -93,6 +93,7 @@
         <TextView
             android:id="@+id/tv_brand"
             style="@style/text_bold"
+            android:layout_width="match_parent"
             android:text="Thương hiệu"
             android:textColor="@color/black"
             android:layout_marginHorizontal="8dp"

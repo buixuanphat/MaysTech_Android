@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 
-public class ItemProduct implements Serializable {
+public class ItemProductInCart implements Serializable {
     int id;
     private int prodId;
     private String name;
@@ -15,17 +15,6 @@ public class ItemProduct implements Serializable {
     private double totalPrice;
     @SerializedName("chosen")
     private boolean isChosen;
-
-    public ItemProduct(int id, int prodId, String name, double price, int amount, String image, double totalPrice, boolean isChosen) {
-        this.id = id;
-        this.prodId = prodId;
-        this.name = name;
-        this.price = price;
-        this.amount = amount;
-        this.image = image;
-        this.totalPrice = totalPrice;
-        this.isChosen = isChosen;
-    }
 
     public int getId() {
         return id;

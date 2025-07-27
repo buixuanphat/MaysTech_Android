@@ -1,9 +1,7 @@
 package com.example.maystech.ui.login;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -11,18 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.maystech.MainActivity;
 import com.example.maystech.R;
-import com.example.maystech.data.STATIC;
-import com.example.maystech.data.SharedPrefManager;
+import com.example.maystech.utils.SharedPrefManager;
 import com.example.maystech.data.model.User;
 import com.example.maystech.databinding.ActivityLoginBinding;
-import com.example.maystech.ui.product_details.ProductDetailViewModel;
 import com.example.maystech.ui.register.RegisterActivity;
-import com.example.maystech.ui.home.HomeFragment;
 
 public class LoginActivity extends AppCompatActivity{
 

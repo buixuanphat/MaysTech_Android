@@ -24,6 +24,7 @@
         android:id="@+id/tv_name"
         style="@style/text_medium"
         android:text="Tên sản phẩm"
+        android:layout_width="match_parent"
         android:maxLines="2"
         android:ellipsize="end"
         app:layout_constraintTop_toBottomOf="@id/iv_image"
@@ -34,6 +35,7 @@
     <TextView
         android:id="@+id/tv_price"
         style="@style/text_bold"
+        android:layout_width="match_parent"
         android:text="Giá sản phẩm"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
         app:layout_constraintStart_toStartOf="parent"

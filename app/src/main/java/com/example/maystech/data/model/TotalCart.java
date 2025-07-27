@@ -3,10 +3,19 @@ package com.example.maystech.data.model;
 import java.io.Serializable;
 
 public class TotalCart implements Serializable {
-    int totalAmount;
-    int totalPrice;
+    private int totalAmount;
+    private int totalPrice;
+    private double totalWeight;
 
-    public TotalCart(int totalAmount, int totalPrice) {
+    public double getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(double totalWeight) {
+        this.totalWeight = totalWeight;
+    }
+
+    public TotalCart(int totalAmount, int totalPrice, double totalWeight) {
         this.totalAmount = totalAmount;
         this.totalPrice = totalPrice;
     }

@@ -9,6 +9,15 @@
         <item name="fontFamily">@font/montserrat_bold</item>
     </style>
 
+    <style name="grey_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="backgroundTint">@color/grey</item>
+    </style>
+
     <style name="edittext_light_blue">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -44,7 +53,6 @@
     </style>
 
     <style name="text_normal">
-        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/montserrat_regular</item>
@@ -52,7 +60,6 @@
     </style>
 
     <style name="text_bold">
-        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/montserrat_bold</item>
@@ -60,10 +67,17 @@
     </style>
 
     <style name="text_medium">
-        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="text_tab_layout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

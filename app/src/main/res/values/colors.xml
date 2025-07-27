@@ -7,9 +7,7 @@
     <color name="dark_gray">#616161</color>
     <color name="light_blue">#F1F4FF</color>
     <color name="yellow">#FFEB3B</color>
-    <color name="gold">#FFD700</color>
-    <color name="silver">#C0C0C0</color>
-    <color name="copper">#B87333</color>
+    <color name="red_50">#50FF0000</color>
 
 
 </resources>

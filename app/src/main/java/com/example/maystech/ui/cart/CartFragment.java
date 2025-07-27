@@ -1,33 +1,28 @@
 package com.example.maystech.ui.cart;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import com.example.maystech.R;
-import com.example.maystech.data.SharedPrefManager;
-import com.example.maystech.data.model.ItemProduct;
+import com.example.maystech.utils.SharedPrefManager;
+import com.example.maystech.data.model.ItemProductInCart;
+import com.example.maystech.data.model.TotalCart;
 import com.example.maystech.data.model.User;
 import com.example.maystech.databinding.FragmentCartBinding;
-import com.example.maystech.databinding.ItemProductCartBinding;
+import com.example.maystech.ui.order.OrderActivity;
 import com.example.maystech.ui.product_details.ProductDetailsActivity;
 
-import java.util.LinkedList;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,15 +33,17 @@ public class CartFragment extends Fragment {
     private CartViewModel viewModel;
     private ProductCartAdapter productCartAdapter;
 
-    private List<ItemProduct> products;
-
-    private int totalPrice = 0;
+    private List<ItemProductInCart> products;
+    private TotalCart totalCart;
+    private List<ItemProductInCart> itemProductInCarts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(LayoutInflater.from(container.getContext()), container, false);
         viewModel = new CartViewModel();
+
+        itemProductInCarts = new ArrayList<>();
 
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(requireContext());
         User user = sharedPrefManager.getUserInfo();
@@ -58,31 +55,31 @@ public class CartFragment extends Fragment {
         rvProduct.setLayoutManager(linearLayoutManager);
         productCartAdapter = new ProductCartAdapter(new ProductCartAdapter.OnClick() {
             @Override
-            public void onAdd(ItemProduct itemProduct) {
-                viewModel.addProductToCart(token, id, itemProduct.getProdId());
+            public void onAdd(ItemProductInCart itemProductInCart) {
+                viewModel.addProductToCart(token, id, itemProductInCart.getProdId());
             }
 
             @Override
-            public void onRemove(ItemProduct itemProduct) {
-                viewModel.deleteProductFromCart(token, itemProduct.getId());
+            public void onRemove(ItemProductInCart itemProductInCart) {
+                viewModel.deleteProductFromCart(token, itemProductInCart.getId());
             }
 
             @Override
-            public void onClick(ItemProduct itemProduct) {
+            public void onClick(ItemProductInCart itemProductInCart) {
                 Intent intent = new Intent(requireContext(), ProductDetailsActivity.class);
-                intent.putExtra("prodId", itemProduct.getProdId());
+                intent.putExtra("prodId", itemProductInCart.getProdId());
                 startActivity(intent);
             }
 
             @Override
-            public void onCheck(CheckBox cb, ItemProduct itemProduct) {
+            public void onCheck(CheckBox cb, ItemProductInCart itemProductInCart) {
                 if(!cb.isChecked())
                 {
-                    viewModel.choose( token,itemProduct.getId(), 0);
+                    viewModel.choose( token, itemProductInCart.getId(), 0);
                 }
                 else
                 {
-                    viewModel.choose(token ,itemProduct.getId(), 1);
+                    viewModel.choose(token , itemProductInCart.getId(), 1);
                 }
             }
         });
@@ -93,6 +90,8 @@ public class CartFragment extends Fragment {
 
         viewModel.getProducts().observe(getViewLifecycleOwner(), products -> {
             productCartAdapter.setData(products);
+            itemProductInCarts.clear();
+            itemProductInCarts.addAll(products);
         });
 
 
@@ -101,8 +100,16 @@ public class CartFragment extends Fragment {
         });
 
         viewModel.getTotal().observe(getViewLifecycleOwner(), total -> {
-            binding.tvPriceTotalChosen.setText(String.valueOf(total.getTotalPrice()));
-            binding.tvAmountTotalChosen.setText("Đã chọn "+ String.valueOf(total.getTotalAmount()));
+            binding.tvPriceTotalChosen.setText("Tổng: " + String.valueOf(total.getTotalPrice()));
+            binding.tvAmountTotalChosen.setText("Đã chọn: "+ String.valueOf(total.getTotalAmount()));
+            totalCart = total;
+        });
+
+        binding.btnOrder.setOnClickListener( v -> {
+            Intent intent = new Intent(requireContext(), OrderActivity.class);
+            intent.putExtra("total", totalCart);
+            intent.putExtra("products", (Serializable) itemProductInCarts);
+            startActivity(intent);
         });
 
         return binding.getRoot();
