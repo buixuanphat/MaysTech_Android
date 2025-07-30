@@ -1,8 +1,9 @@
 package com.example.maystech.data.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Delivery {
+public class Delivery implements Serializable {
     private int id;
     private int userId;
     private String startDate;
@@ -12,6 +13,25 @@ public class Delivery {
     private Double totalPrice;
     private Integer totalAmount;
     private Double totalWeight;
+    private Boolean hasFeedback;
+
+    public Boolean getHasFeedback() {
+        return hasFeedback;
+    }
+
+    public void setHasFeedback(Boolean hasFeedback) {
+        this.hasFeedback = hasFeedback;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    private String address;
 
     public int getId() {
         return id;

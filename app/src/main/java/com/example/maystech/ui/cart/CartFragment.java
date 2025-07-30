@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.example.maystech.data.model.Delivery;
 import com.example.maystech.utils.SharedPrefManager;
 import com.example.maystech.data.model.ItemProductInCart;
-import com.example.maystech.data.model.TotalCart;
 import com.example.maystech.data.model.User;
 import com.example.maystech.databinding.FragmentCartBinding;
 import com.example.maystech.ui.order.OrderActivity;
@@ -34,7 +34,7 @@ public class CartFragment extends Fragment {
     private ProductCartAdapter productCartAdapter;
 
     private List<ItemProductInCart> products;
-    private TotalCart totalCart;
+    private Delivery delivery;
     private List<ItemProductInCart> itemProductInCarts;
 
     @Override
@@ -48,7 +48,6 @@ public class CartFragment extends Fragment {
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(requireContext());
         User user = sharedPrefManager.getUserInfo();
         String token = "Bearer "+ sharedPrefManager.getToken();
-        int id = user.getId();
 
         RecyclerView rvProduct = binding.rvProducts;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext() ,LinearLayoutManager.VERTICAL, false);
@@ -56,7 +55,7 @@ public class CartFragment extends Fragment {
         productCartAdapter = new ProductCartAdapter(new ProductCartAdapter.OnClick() {
             @Override
             public void onAdd(ItemProductInCart itemProductInCart) {
-                viewModel.addProductToCart(token, id, itemProductInCart.getProdId());
+                viewModel.addProductToCart(token, user.getId(), itemProductInCart.getProdId());
             }
 
             @Override
@@ -85,8 +84,8 @@ public class CartFragment extends Fragment {
         });
         rvProduct.setAdapter(productCartAdapter);
 
-        viewModel.getProductInCart(token,id);
-        viewModel.getTotalCart(token, id);
+        viewModel.getProductInCart(token,user.getId());
+        viewModel.getTotalCart(token, user.getId());
 
         viewModel.getProducts().observe(getViewLifecycleOwner(), products -> {
             productCartAdapter.setData(products);
@@ -102,13 +101,23 @@ public class CartFragment extends Fragment {
         viewModel.getTotal().observe(getViewLifecycleOwner(), total -> {
             binding.tvPriceTotalChosen.setText("Tổng: " + String.valueOf(total.getTotalPrice()));
             binding.tvAmountTotalChosen.setText("Đã chọn: "+ String.valueOf(total.getTotalAmount()));
-            totalCart = total;
+            delivery = total;
         });
 
         binding.btnOrder.setOnClickListener( v -> {
             Intent intent = new Intent(requireContext(), OrderActivity.class);
-            intent.putExtra("total", totalCart);
-            intent.putExtra("products", (Serializable) itemProductInCarts);
+            intent.putExtra("delivery", delivery);
+
+            List<ItemProductInCart> productChosen = new ArrayList<>();
+            for(int i =0; i< itemProductInCarts.size(); i++)
+            {
+                if(itemProductInCarts.get(i).isChosen())
+                {
+                    productChosen.add(itemProductInCarts.get(i));
+                }
+            }
+
+            intent.putExtra("products", (Serializable) productChosen);
             startActivity(intent);
         });
 

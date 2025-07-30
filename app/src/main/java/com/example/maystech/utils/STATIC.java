@@ -2,6 +2,9 @@ package com.example.maystech.utils;
 
 public class STATIC {
     public final static String TOKEN = "6defb704-573b-11f0-99f8-027692bb547c";
+    public final static int SHOP_ID = 5869076;
+    public final static int SHOP_DISTRICT_ID = 1461;
+    public final static String SHOP_WARD_CODE = "21306";
     public static final String KEY_TOKEN = "token";
     public static final String PREF_NAME = "my_pref";
     public static final String KEY_ID = "id";

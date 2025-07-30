@@ -4,8 +4,8 @@ import com.example.maystech.data.api.ApiClient;
 import com.example.maystech.data.api.ApiResponse;
 import com.example.maystech.data.api.ApiService;
 import com.example.maystech.data.model.AddToCartRequest;
+import com.example.maystech.data.model.Delivery;
 import com.example.maystech.data.model.ItemProductInCart;
-import com.example.maystech.data.model.TotalCart;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class UserProductRepository {
         apiService.deleteProductFromCart(id, token).enqueue(callback);
     }
 
-    public void getTotalCart(String token, int userId, Callback<ApiResponse<TotalCart>> callback)
+    public void getTotalCart(String token, int userId, Callback<ApiResponse<Delivery>> callback)
     {
         apiService.getTotalCart(userId, token).enqueue(callback);
     }

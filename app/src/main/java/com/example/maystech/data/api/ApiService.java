@@ -1,6 +1,12 @@
 package com.example.maystech.data.api;
 
+import com.example.maystech.data.model.Comment;
 import com.example.maystech.data.model.ItemProductOrder;
+import com.example.maystech.data.model.Rating;
+import com.example.maystech.data.model.ShippingFeeRequest;
+import com.example.maystech.data.model.ShippingFeeResponse;
+import com.example.maystech.data.model.ShippingServiceRequest;
+import com.example.maystech.data.model.ShippingServiceResponse;
 import com.example.maystech.utils.STATIC;
 import com.example.maystech.data.model.AddToCartRequest;
 import com.example.maystech.data.model.Brand;
@@ -11,7 +17,6 @@ import com.example.maystech.data.model.ItemProductInCart;
 import com.example.maystech.data.model.Product;
 import com.example.maystech.data.model.ProductImage;
 import com.example.maystech.data.model.Province;
-import com.example.maystech.data.model.TotalCart;
 import com.example.maystech.data.model.User;
 import com.example.maystech.data.model.Ward;
 import com.google.gson.JsonObject;
@@ -89,7 +94,7 @@ public interface ApiService {
             );
 
     @GET("user-product/total/{userId}")
-    Call<ApiResponse<TotalCart>> getTotalCart(
+    Call<ApiResponse<Delivery>> getTotalCart(
             @Path("userId") int userId,
             @Header("Authorization") String token
             );
@@ -119,6 +124,22 @@ public interface ApiService {
             @Body JsonObject body
     );
 
+    @POST("v2/shipping-order/available-services")
+    @Headers("Content-Type: application/json")
+    Call<GhnApiResponse<ShippingServiceResponse>> getService(
+            @Header("Token") String token,
+            @Body ShippingServiceRequest body
+    );
+
+
+    @POST("v2/shipping-order/fee")
+    @Headers("Content-Type: application/json")
+    Call<ApiResponse<ShippingFeeResponse>> getShippingFee(
+            @Header("Token") String token,
+            @Header("ShopId") int shopId,
+            @Body ShippingFeeRequest body
+            );
+
 
     // === USER ===
     @POST("auth/login")
@@ -140,12 +161,29 @@ public interface ApiService {
     Call<ApiResponse<List<Delivery>>> getDeliveryList(@Header("Authorization") String token, @Path("userId") int userId, @Query("status") String status);
 
     @POST("deliveries")
-    Call<ApiResponse<Delivery>> addDelivery(@Body JsonObject body);
+    Call<ApiResponse<Delivery>> addDelivery(@Header("Authorization") String token ,@Body JsonObject body);
+
+    @PATCH("deliveries/{id}")
+    Call<ApiResponse<Delivery>> updateFeedbackStatus(@Path("id") int id);
 
     // === DELIVERY DETAILS ===
     @GET("delivery-details/{deliveryId}")
     Call<ApiResponse<List<ItemProductOrder>>> getProductInDelivery(@Path("deliveryId") int deliveryId);
 
     @POST("delivery-details/{deliveryId}")
-    Call<ApiResponse<List<ItemProductOrder>>> addProductToDelivery (@Body List<ItemProductOrder> body);
+    Call<ApiResponse<List<ItemProductOrder>>> addProductToDelivery ( @Path("deliveryId") int deliveryId, @Body List<ItemProductOrder> body);
+
+    // === FEEDBACK ===
+    @GET("comments/{prodId}")
+    Call<ApiResponse<List<Comment>>> getComments(@Path("prodId") int prodId);
+
+    @POST("comments")
+    Call<ApiResponse<Comment>> addComment(@Body JsonObject body);
+
+    @GET("ratings/{prodId}")
+    Call<ApiResponse<Integer>> getRatingAvg(@Path("prodId") int prodId);
+
+    @POST("ratings")
+    Call<ApiResponse<Rating>> addRating(@Body JsonObject body);
+
 }

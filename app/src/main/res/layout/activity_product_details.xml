@@ -35,6 +35,7 @@
                 <TextView
                     android:id="@+id/tv_name"
                     style="@style/text_medium"
+                    android:layout_width="match_parent"
                     android:text="@{productDetailsViewModel.name}"
                     android:textSize="22sp"
                     android:textColor="@color/black"
@@ -45,6 +46,7 @@
                 <TextView
                     android:id="@+id/tv_price"
                     style="@style/text_bold"
+                    android:layout_width="match_parent"
                     android:text="@{productDetailsViewModel.price.toString()}"
                     android:textColor="@color/black"
                     android:textSize="26dp"
@@ -70,6 +72,7 @@
 
                 <TextView
                     android:id="@+id/tv_title_description"
+                    android:layout_width="match_parent"
                     style="@style/text_bold"
                     android:text="Mô tả"
                     android:layout_marginHorizontal="16dp"
@@ -82,6 +85,7 @@
                 <TextView
                     android:id="@+id/tv_description"
                     style="@style/text_normal"
+                    android:layout_width="match_parent"
                     android:text="@{productDetailsViewModel.description}"
                     app:layout_constraintTop_toBottomOf="@id/tv_title_description"
                     tools:ignore="MissingConstraints"

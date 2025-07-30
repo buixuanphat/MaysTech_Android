@@ -18,9 +18,14 @@ public class DeliveryRepository {
         apiService.getDeliveryList(token, userId, status).enqueue(callback);
     }
 
-    public void addDelivery (JsonObject body, Callback<ApiResponse<Delivery>> callback)
+    public void addDelivery (String token, JsonObject body, Callback<ApiResponse<Delivery>> callback)
     {
-        apiService.addDelivery(body).enqueue(callback);
+        apiService.addDelivery(token, body).enqueue(callback);
+    }
+
+    public void updateFeedbackStatus(int id, Callback<ApiResponse<Delivery>> callback)
+    {
+        apiService.updateFeedbackStatus(id).enqueue(callback);
     }
 
 }

@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.maystech.data.api.ApiResponse;
+import com.example.maystech.data.model.Delivery;
 import com.example.maystech.data.model.ItemProductInCart;
-import com.example.maystech.data.model.TotalCart;
 import com.example.maystech.data.repository.UserProductRepository;
 
 import java.util.List;
@@ -21,18 +21,18 @@ public class CartViewModel extends ViewModel {
     private UserProductRepository userProductRepository;
     private MutableLiveData<List<ItemProductInCart>> products;
     private MutableLiveData<String> addToCartMessage;
-    private MutableLiveData<TotalCart> totalCart;
+    private MutableLiveData<Delivery> delivery;
 
     public CartViewModel() {
         this.userProductRepository = new UserProductRepository();
         this.products = new MutableLiveData<>();
         this.addToCartMessage = new MutableLiveData<>();
-        this.totalCart = new MutableLiveData<>();
+        this.delivery = new MutableLiveData<>();
     }
 
-    public LiveData<TotalCart> getTotal()
+    public LiveData<Delivery> getTotal()
     {
-        return this.totalCart;
+        return this.delivery;
     }
 
     public LiveData<List<ItemProductInCart>> getProducts()
@@ -103,17 +103,17 @@ public class CartViewModel extends ViewModel {
 
     public void getTotalCart(String token ,int userId)
     {
-        userProductRepository.getTotalCart(token ,userId, new Callback<ApiResponse<TotalCart>>() {
+        userProductRepository.getTotalCart(token ,userId, new Callback<ApiResponse<Delivery>>() {
             @Override
-            public void onResponse(Call<ApiResponse<TotalCart>> call, Response<ApiResponse<TotalCart>> response) {
+            public void onResponse(Call<ApiResponse<Delivery>> call, Response<ApiResponse<Delivery>> response) {
                 if(response.isSuccessful())
                 {
-                    totalCart.setValue(response.body().getData());
+                    delivery.setValue(response.body().getData());
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<TotalCart>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Delivery>> call, Throwable t) {
                 Log.e("error", t.getMessage());
             }
         });

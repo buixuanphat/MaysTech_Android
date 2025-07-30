@@ -1,4 +1,9 @@
 package com.example.maystech.data.repository;
+import com.example.maystech.data.api.ApiResponse;
+import com.example.maystech.data.model.ShippingFeeRequest;
+import com.example.maystech.data.model.ShippingFeeResponse;
+import com.example.maystech.data.model.ShippingServiceRequest;
+import com.example.maystech.data.model.ShippingServiceResponse;
 import com.example.maystech.utils.STATIC;
 import com.example.maystech.data.api.ApiService;
 import com.example.maystech.data.api.GhnApiClient;
@@ -30,6 +35,16 @@ public class GhnRepository {
         JsonObject body = new JsonObject();
         body.addProperty("district_id", districtId);
         apiService.getWard(STATIC.TOKEN, body).enqueue(callback);
+    }
+
+    public void getService(ShippingServiceRequest body, Callback<GhnApiResponse<ShippingServiceResponse>> callback)
+    {
+        apiService.getService(STATIC.TOKEN, body).enqueue(callback);
+    }
+
+    public void getShippingFee(String token, int shopId, ShippingFeeRequest request, Callback<ApiResponse<ShippingFeeResponse>> callback)
+    {
+        apiService.getShippingFee(token, shopId, request).enqueue(callback);
     }
 
 

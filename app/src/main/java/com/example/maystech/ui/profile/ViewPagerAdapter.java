@@ -20,9 +20,10 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position)
         {
-            case 2 : return new ShippingFragment();
-            case 3 : return new DeliveredFragment();
-            case 4 : return new CancelledFragment();
+            case 0: return new PreparingFragment();
+            case 1 : return new ShippingFragment();
+            case 2 : return new DeliveredFragment();
+            case 3 : return new CancelledFragment();
             default: return new PreparingFragment();
         }
     }
