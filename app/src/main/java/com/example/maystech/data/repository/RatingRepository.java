@@ -11,7 +11,7 @@ import retrofit2.Callback;
 public class RatingRepository {
     ApiService apiService = ApiClient.getRetrofit().create(ApiService.class);
 
-    public void getRatings(int prodId, Callback<ApiResponse<Integer>> callback)
+    public void getRatings(int prodId, Callback<ApiResponse<Double>> callback)
     {
         apiService.getRatingAvg(prodId).enqueue(callback);
     }

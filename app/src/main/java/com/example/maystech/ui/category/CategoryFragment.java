@@ -1,7 +1,9 @@
 package com.example.maystech.ui.category;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
@@ -12,9 +14,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.maystech.data.model.Brand;
 import com.example.maystech.data.model.Category;
@@ -22,6 +28,8 @@ import com.example.maystech.data.model.Product;
 import com.example.maystech.databinding.FragmentCategoryBinding;
 import com.example.maystech.ui.product_details.ProductDetailsActivity;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class CategoryFragment extends Fragment {
@@ -31,7 +39,8 @@ public class CategoryFragment extends Fragment {
     private CategoryAdapter adapter;
     private ProductAdapter productAdapter;
     private int currentCat;
-
+    List<Product> productList;
+    List<Product> resultSearchList;
 
 
     @Override
@@ -45,12 +54,15 @@ public class CategoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        productList = new ArrayList<>();
+        resultSearchList =new ArrayList<>();
+
         Intent intent = new Intent(requireContext(), ProductDetailsActivity.class);
 
         //Get categories
         viewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
 
-        adapter = new CategoryAdapter( new CategoryAdapter.OnItemClickListener() {
+        adapter = new CategoryAdapter(new CategoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Category cat) {
                 adapter.setCurrentItemId(cat.getId());
@@ -106,14 +118,18 @@ public class CategoryFragment extends Fragment {
         viewModel.getProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
+                productList.clear();
+                productList.addAll(products);
+
+                resultSearchList.clear();
+                resultSearchList.addAll(products);
+
                 productAdapter.setData(products);
             }
         });
 
 
-
-
-        //Drawer layout
+        // === DRAWER LAYOUT ===
         GridLayoutManager gridLayoutManagerBrand = new GridLayoutManager(requireContext(), 2);
         DrawerLayout drawerLayout = binding.drawer;
         binding.ivFilter.setOnClickListener(v ->
@@ -140,6 +156,46 @@ public class CategoryFragment extends Fragment {
                 brandAdapter.setData(brands);
             }
         });
+
+        binding.tvAsc.setOnClickListener(v ->
+        {
+            resultSearchList.sort(Comparator.comparing(Product::getPrice));
+            productAdapter.setData(resultSearchList);
+        });
+
+        binding.tvDesc.setOnClickListener(v ->
+        {
+            resultSearchList.sort(Comparator.comparing(Product::getPrice).reversed());
+            productAdapter.setData(resultSearchList);
+        });
+
+        binding.edtSearch.setOnEditorActionListener((textView, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    actionId == EditorInfo.IME_ACTION_DONE ||
+                    actionId == EditorInfo.IME_ACTION_NEXT) {
+
+                String kw = binding.edtSearch.getText().toString();
+                resultSearchList.clear();
+                productList.forEach(p ->
+                {
+                    if(p.getName().toString().trim().toLowerCase().contains(kw.toLowerCase()))
+                    {
+                        resultSearchList.add(p);
+                    }
+                });
+                productAdapter.setData(resultSearchList);
+
+
+                // Ẩn bàn phím
+                InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.edtSearch.getWindowToken(), 0);
+
+                return true; // đã xử lý
+            }
+            return false;
+        });
+
+
 
     }
 

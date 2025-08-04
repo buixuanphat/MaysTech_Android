@@ -1,5 +1,7 @@
 package com.example.maystech.utils;
 
+import java.text.DecimalFormat;
+
 public class STATIC {
     public final static String TOKEN = "6defb704-573b-11f0-99f8-027692bb547c";
     public final static int SHOP_ID = 5869076;
@@ -24,4 +26,10 @@ public class STATIC {
     public static final String SHIPPING = "SHIPPING";
     public static final String DELIVERED = "DELIVERED";
     public static final String CANCELLED = "CANNCELED";
+
+    public static String formatPrice(double price)
+    {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(price) + " VNĐ";
+    }
 }

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.maystech.data.model.ItemProductOrder;
-import com.example.maystech.databinding.ItemProducIOrderListDetailsBinding;
+import com.example.maystech.databinding.ItemProductInOrderListBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class ProductInOrderListAdapter extends RecyclerView.Adapter<ProductInOrd
     @NonNull
     @Override
     public ProductInOrderListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemProducIOrderListDetailsBinding binding = ItemProducIOrderListDetailsBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemProductInOrderListBinding binding = ItemProductInOrderListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductInOrderListViewHolder(binding);
     }
 
@@ -58,8 +58,8 @@ public class ProductInOrderListAdapter extends RecyclerView.Adapter<ProductInOrd
 
     class ProductInOrderListViewHolder extends RecyclerView.ViewHolder
     {
-        ItemProducIOrderListDetailsBinding binding;
-        public ProductInOrderListViewHolder(ItemProducIOrderListDetailsBinding binding) {
+        ItemProductInOrderListBinding binding;
+        public ProductInOrderListViewHolder(ItemProductInOrderListBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

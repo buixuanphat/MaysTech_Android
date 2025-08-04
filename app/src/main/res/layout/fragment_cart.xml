@@ -21,7 +21,8 @@
         style="@style/text_normal"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="6dp"
-        app:layout_constraintBottom_toTopOf="@id/tv_price_total_chosen" />
+        app:layout_constraintBottom_toTopOf="@id/tv_price_total_chosen"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_price_total_chosen"
@@ -30,7 +31,8 @@
         style="@style/text_bold"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="6dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_order" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_order"
+        android:visibility="gone"/>
 
 
 
@@ -42,6 +44,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="12dp"
+        android:visibility="gone"
         />
+
+    <TextView
+        android:id="@+id/tv_label"
+        style="@style/text_medium"
+        android:layout_width="wrap_content"
+        android:text="Không có sản phẩm trong giỏ hàng"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

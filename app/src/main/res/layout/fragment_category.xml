@@ -34,9 +34,14 @@
                 android:src="@drawable/ic_search_24px" />
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_search"
                 style="@style/edittext_grey"
                 android:background="@drawable/shape_layout_rounded_horizontal"
-                android:hint="Tìm kiếm" />
+                android:hint="Tìm kiếm"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:maxLines="1" />
+
 
         </LinearLayout>
 
@@ -108,6 +113,51 @@
             app:layout_constraintTop_toBottomOf="@id/tv_brand"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/tv_ordered"
+            style="@style/text_bold"
+            android:layout_width="match_parent"
+            android:text="Giá"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/rv_brand"
+            android:layout_marginTop="16dp"
+            tools:ignore="MissingConstraints"
+            />
+
+            <TextView
+                android:id="@+id/tv_asc"
+                style="@style/text_bold"
+                android:layout_width="0dp"
+                android:background="@drawable/shape_layout_rounded_10dp"
+                android:backgroundTint="@color/grey"
+                android:text="Tăng dần"
+                android:padding="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_ordered"
+                app:layout_constraintRight_toLeftOf="@+id/tv_desc"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:ignore="MissingConstraints"
+                />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                style="@style/text_bold"
+                android:layout_width="0dp"
+                android:background="@drawable/shape_layout_rounded_10dp"
+                android:backgroundTint="@color/grey"
+                android:text="Giảm dần"
+                android:padding="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_ordered"
+                app:layout_constraintLeft_toRightOf="@+id/tv_asc"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="6dp"/>
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

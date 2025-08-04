@@ -59,7 +59,7 @@ public class DeliveredAdapter extends RecyclerView.Adapter<DeliveredAdapter.Deli
         Delivery delivery = list.get(position);
         holder.binding.tvTotalOrder.setText(String.valueOf(delivery.getTotalPrice()));
         holder.binding.tvAmountTotal.setText(String.valueOf(delivery.getTotalAmount()));
-        if (!delivery.getHasFeedback()) {
+        if (!delivery.isHasFeedback()) {
             holder.binding.btnFeedback.setVisibility(VISIBLE);
 
             holder.binding.btnFeedback.setOnClickListener(v ->

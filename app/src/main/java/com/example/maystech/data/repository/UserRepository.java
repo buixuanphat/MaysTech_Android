@@ -33,4 +33,8 @@ public class UserRepository {
         apiService.updateInfo(token,body, userId).enqueue(callback);
     }
 
+    public void updateAvatar(String token, Map<String, String> body, int userId, Callback<ApiResponse<User>> callback)
+    {
+        apiService.updateAvatar(token, body, userId).enqueue(callback);
+    }
 }

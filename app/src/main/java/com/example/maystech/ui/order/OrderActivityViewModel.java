@@ -49,10 +49,9 @@ public class OrderActivityViewModel extends ViewModel {
     {
         JsonObject body = new JsonObject();
         body.addProperty("userId", userId);
-        body.addProperty("startDate", delivery.getStartDate());
+        body.addProperty("startDate", delivery.getStartDate().toString());
         body.addProperty("totalPrice", delivery.getTotalPrice());
         body.addProperty("totalAmount", delivery.getTotalAmount());
-        body.addProperty("totalWeight", delivery.getTotalWeight());
 
         deliveryRepository.addDelivery(token, body, new Callback<ApiResponse<Delivery>>() {
             @Override

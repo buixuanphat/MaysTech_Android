@@ -6,13 +6,14 @@ import java.io.Serializable;
 
 
 public class ItemProductInCart implements Serializable {
-    int id;
-    private int prodId;
-    private String name;
-    private double price;
-    private int amount;
-    private String image;
+    private int id;
+    private int userId;
+    private int productId;
+    private String productName;
+    private String productImage;
+    private double productPrice;
     private double totalPrice;
+    private Integer amount;
     @SerializedName("chosen")
     private boolean isChosen;
 
@@ -24,44 +25,44 @@ public class ItemProductInCart implements Serializable {
         this.id = id;
     }
 
-    public int getProdId() {
-        return prodId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setProdId(int prodId) {
-        this.prodId = prodId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public double getPrice() {
-        return price;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public int getAmount() {
-        return amount;
+    public String getProductImage() {
+        return productImage;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
     }
 
-    public String getImage() {
-        return image;
+    public double getProductPrice() {
+        return productPrice;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
     }
 
     public double getTotalPrice() {
@@ -70,6 +71,14 @@ public class ItemProductInCart implements Serializable {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public boolean isChosen() {

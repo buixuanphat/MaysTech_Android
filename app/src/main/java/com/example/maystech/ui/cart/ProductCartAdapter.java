@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.maystech.data.model.ItemProductInCart;
 import com.example.maystech.databinding.ItemProductCartBinding;
+import com.example.maystech.utils.STATIC;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -44,13 +45,11 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
     @Override
     public void onBindViewHolder(@NonNull ProductCartViewHolder holder, int position) {
         ItemProductInCart itemProductInCart = products.get(position);
-        holder.binding.tvName.setText(itemProductInCart.getName());
-
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        holder.binding.tvPrice.setText(formatter.format(itemProductInCart.getPrice()) + "đ");
-        holder.binding.tvPriceTotal.setText(formatter.format(itemProductInCart.getTotalPrice()) + "đ");
+        holder.binding.tvName.setText(itemProductInCart.getProductName());
+        holder.binding.tvPrice.setText(STATIC.formatPrice(itemProductInCart.getProductPrice()));
+        holder.binding.tvPriceTotal.setText(STATIC.formatPrice(itemProductInCart.getTotalPrice()));
         holder.binding.tvAmountTotal.setText(String.valueOf(itemProductInCart.getAmount()));
-        Glide.with(holder.binding.getRoot().getContext()).load(itemProductInCart.getImage()).into(holder.binding.ivImage);
+        Glide.with(holder.binding.getRoot().getContext()).load(itemProductInCart.getProductImage()).into(holder.binding.ivImage);
         holder.binding.checkBox.setChecked(itemProductInCart.isChosen());
         holder.binding.btnAdd.setOnClickListener(v -> {onClick.onAdd(products.get(position));});
         holder.binding.btnRemove.setOnClickListener(v ->{onClick.onRemove(products.get(position));});

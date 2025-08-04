@@ -6,31 +6,13 @@ import java.time.LocalDate;
 public class Delivery implements Serializable {
     private int id;
     private int userId;
-    private String startDate;
-    private String receivedDate;
+    private LocalDate startDate;
+    private LocalDate receivedDate;
     private String status;
-    private Boolean cancellationRequest;
-    private Double totalPrice;
-    private Integer totalAmount;
-    private Double totalWeight;
-    private Boolean hasFeedback;
-
-    public Boolean getHasFeedback() {
-        return hasFeedback;
-    }
-
-    public void setHasFeedback(Boolean hasFeedback) {
-        this.hasFeedback = hasFeedback;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
+    private boolean cancellationRequest;
+    private double totalPrice;
+    private int totalAmount;
+    private boolean hasFeedback;
     private String address;
 
     public int getId() {
@@ -49,20 +31,20 @@ public class Delivery implements Serializable {
         this.userId = userId;
     }
 
-    public String getReceivedDate() {
-        return receivedDate;
-    }
-
-    public void setReceivedDate(String receivedDate) {
-        this.receivedDate = receivedDate;
-    }
-
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public LocalDate getReceivedDate() {
+        return receivedDate;
+    }
+
+    public void setReceivedDate(LocalDate receivedDate) {
+        this.receivedDate = receivedDate;
     }
 
     public String getStatus() {
@@ -73,35 +55,43 @@ public class Delivery implements Serializable {
         this.status = status;
     }
 
-    public Boolean getCancellationRequest() {
+    public boolean isCancellationRequest() {
         return cancellationRequest;
     }
 
-    public void setCancellationRequest(Boolean cancellationRequest) {
+    public void setCancellationRequest(boolean cancellationRequest) {
         this.cancellationRequest = cancellationRequest;
     }
 
-    public Double getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public Integer getTotalAmount() {
+    public int getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Integer totalAmount) {
+    public void setTotalAmount(int totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Double getTotalWeight() {
-        return totalWeight;
+    public boolean isHasFeedback() {
+        return hasFeedback;
     }
 
-    public void setTotalWeight(Double totalWeight) {
-        this.totalWeight = totalWeight;
+    public void setHasFeedback(boolean hasFeedback) {
+        this.hasFeedback = hasFeedback;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -2,6 +2,7 @@ package com.example.maystech.data.api;
 
 import com.example.maystech.data.model.Comment;
 import com.example.maystech.data.model.ItemProductOrder;
+import com.example.maystech.data.model.ProductHighlight;
 import com.example.maystech.data.model.Rating;
 import com.example.maystech.data.model.ShippingFeeRequest;
 import com.example.maystech.data.model.ShippingFeeResponse;
@@ -43,7 +44,7 @@ public interface ApiService {
 
 
 
-    //products
+    // === PRODUCT ===
     @GET("products")
     Call<ApiResponse<List<Product>>> getProducts();
 
@@ -58,6 +59,9 @@ public interface ApiService {
     Call<ApiResponse<Product>> getProduct(@Path("prodId") int prodId);
 
 
+    // === PRODUCT-HIGHLIGHT ===
+    @GET("product-highlight")
+    Call<ApiResponse<List<ProductHighlight>>> getProductHighLight();
 
 
     // product-image
@@ -154,6 +158,9 @@ public interface ApiService {
     @PATCH("users/{userId}")
     Call<ApiResponse<User>> updateInfo (@Header("Authorization") String token, @Body JsonObject body, @Path("userId") int userId);
 
+    @PATCH("users/avatar/{userId}")
+    Call<ApiResponse<User>> updateAvatar (@Header("Authorization") String token, @Body Map<String, String> body, @Path("userId") int userId);
+
 
 
     // === DELIVERY ===
@@ -181,7 +188,7 @@ public interface ApiService {
     Call<ApiResponse<Comment>> addComment(@Body JsonObject body);
 
     @GET("ratings/{prodId}")
-    Call<ApiResponse<Integer>> getRatingAvg(@Path("prodId") int prodId);
+    Call<ApiResponse<Double>> getRatingAvg(@Path("prodId") int prodId);
 
     @POST("ratings")
     Call<ApiResponse<Rating>> addRating(@Body JsonObject body);

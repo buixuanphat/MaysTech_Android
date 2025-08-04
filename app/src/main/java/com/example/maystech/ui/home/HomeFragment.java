@@ -3,9 +3,11 @@ package com.example.maystech.ui.home;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +20,30 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
+    HomeViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
+        //=================================================================================
         List<ProductHighlight> banners = new LinkedList<>();
-        banners.add(new ProductHighlight(1, "https://cdnv2.tgdd.vn/mwg-static/common/News/1577815/IMG_4120.jpeg", 1));
-        banners.add(new ProductHighlight(2, "https://macstores.vn/wp-content/uploads/2024/09/lenovo-thinkpad-x1-carbon-gen-13-3.jpg", 2));
-
         ViewPager2 vpBanner = binding.vpBanner;
         BannerAdapter bannerAdapter = new BannerAdapter(banners);
         vpBanner.setAdapter(bannerAdapter);
+
+        viewModel.getProductHighLightList().observe(getViewLifecycleOwner(), l ->
+        {
+            banners.clear();
+            banners.addAll(l);
+            bannerAdapter.notifyDataSetChanged();
+            Log.e("error", l.get(0).getImage());
+        });
+
+        viewModel.fetchProductHighLight();
+
 
         final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {

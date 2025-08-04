@@ -8,11 +8,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.maystech.data.api.ApiResponse;
+import com.example.maystech.data.model.Comment;
 import com.example.maystech.data.model.ItemProductInCart;
 import com.example.maystech.data.model.Product;
 import com.example.maystech.data.model.ProductImage;
+import com.example.maystech.data.repository.CommentRepository;
 import com.example.maystech.data.repository.ProductImageRepository;
 import com.example.maystech.data.repository.ProductRepository;
+import com.example.maystech.data.repository.RatingRepository;
 import com.example.maystech.data.repository.UserProductRepository;
 
 import java.util.List;
@@ -28,20 +31,26 @@ public class ProductDetailViewModel extends ViewModel {
 
     UserProductRepository userProductRepository;
 
-    public ObservableField<String> name;
-    public ObservableField<Double> price;
-    public ObservableField<String> description;
-    private MutableLiveData<List<ProductImage>> productImages;
-    private MutableLiveData<String> addToCartMessage;
+    private final MutableLiveData<List<ProductImage>> productImages;
+    private final MutableLiveData<String> addToCartMessage;
+    private final MutableLiveData<List<Comment>> commentList;
+    private final MutableLiveData<Double> ratingAvg;
+    private final CommentRepository commentRepository;
+    private final RatingRepository ratingRepository;
+    private final MutableLiveData<Product> product;
+
+
     public ProductDetailViewModel() {
         this.productRepository = new ProductRepository();
         this.productImageRepository = new ProductImageRepository();
         this.userProductRepository = new UserProductRepository();
-        this.name = new ObservableField<>();
-        this.price = new ObservableField<>();
-        this.description = new ObservableField<>();
-        productImages = new MutableLiveData<>();
+        this.productImages = new MutableLiveData<>();
         this.addToCartMessage = new MutableLiveData<>();
+        this.commentList = new MutableLiveData<>();
+        this.ratingAvg = new MutableLiveData<>();
+        this.commentRepository = new CommentRepository();
+        this.ratingRepository = new RatingRepository();
+        this.product = new MutableLiveData<>();
     }
 
     public LiveData<List<ProductImage>> getProductImages()
@@ -54,20 +63,28 @@ public class ProductDetailViewModel extends ViewModel {
         return this.addToCartMessage;
     }
 
+    public LiveData<List<Comment>> getCommentList()
+    {
+        return this.commentList;
+    }
 
+    public LiveData<Double> getRatingAvg()
+    {
+        return this.ratingAvg;
+    }
 
-    public void fetchProduct(int prodId)
+    public LiveData<Product> getProduct()
+    {
+        return this.product;
+    }
+        public void fetchProduct(int prodId)
     {
         productRepository.getProduct(prodId, new Callback<ApiResponse<Product>>() {
             @Override
             public void onResponse(Call<ApiResponse<Product>> call, Response<ApiResponse<Product>> response) {
-                if(response.isSuccessful())
+                if(response.isSuccessful() && response.body()!=null)
                 {
-
-                    Product p = response.body().getData();
-                    name.set(p.getName());
-                    price.set(p.getPrice());
-                    description.set(p.getDescription());
+                    product.setValue(response.body().getData());
                 }
             }
 
@@ -112,4 +129,47 @@ public class ProductDetailViewModel extends ViewModel {
         });
     }
 
+    public void fetchComments(int prodId)
+    {
+        commentRepository.getComments(prodId, new Callback<ApiResponse<List<Comment>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Comment>>> call, Response<ApiResponse<List<Comment>>> response) {
+                if(response.isSuccessful() && response.body()!=null)
+                {
+                    commentList.setValue(response.body().getData());
+                }
+                else
+                {
+                    Log.e("FetchComments error", response.code()+"");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Comment>>> call, Throwable t) {
+                Log.e("FetchComments failure", t.getMessage());
+            }
+        });
+    }
+
+    public void fetchRatingAvg(int prodId)
+    {
+        ratingRepository.getRatings(prodId, new Callback<ApiResponse<Double>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Double>> call, Response<ApiResponse<Double>> response) {
+                if(response.isSuccessful() && response.body()!=null)
+                {
+                    ratingAvg.setValue(response.body().getData());
+                }
+                else
+                {
+                    Log.e("FetchRatingAvg error", response.code()+"");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Double>> call, Throwable t) {
+                Log.e("FetchRatingAvg failure", t.getMessage());
+            }
+        });
+    }
 }

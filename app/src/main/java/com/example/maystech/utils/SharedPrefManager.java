@@ -41,9 +41,6 @@ public class SharedPrefManager {
         editor.putString(STATIC.KEY_DISTRICT, user.getDistrict());
         editor.putString(STATIC.KEY_ADDRESS_DETAILS, user.getAddressDetails());
         editor.putString(STATIC.KEY_PROVINCE, user.getProvince());
-        editor.putInt(STATIC.KEY_PROVINCE_ID, user.getProvinceId());
-        editor.putInt(STATIC.KEY_DISTRICT_ID, user.getDistrictId());
-        editor.putInt(STATIC.KEY_WARD_ID, user.getWardId());
         editor.putString(STATIC.KEY_PHONE_NUMBER, user.getPhoneNumber());
         editor.putString(STATIC.KEY_USERNAME, user.getUsername());
         editor.putString(STATIC.KEY_AVATAR, user.getAvatar());
@@ -59,9 +56,6 @@ public class SharedPrefManager {
         user.setDistrict(sharedPreferences.getString(STATIC.KEY_DISTRICT, ""));
         user.setAddressDetails(sharedPreferences.getString(STATIC.KEY_ADDRESS_DETAILS, ""));
         user.setProvince(sharedPreferences.getString(STATIC.KEY_PROVINCE, ""));
-        user.setProvinceId(sharedPreferences.getInt(STATIC.KEY_PROVINCE_ID, 0));
-        user.setDistrictId(sharedPreferences.getInt(STATIC.KEY_DISTRICT_ID, 0));
-        user.setWardId(sharedPreferences.getInt(STATIC.KEY_WARD_ID, 0));
         user.setPhoneNumber(sharedPreferences.getString(STATIC.KEY_PHONE_NUMBER, ""));
         user.setUsername(sharedPreferences.getString(STATIC.KEY_USERNAME, ""));
         user.setAvatar(sharedPreferences.getString(STATIC.KEY_AVATAR, ""));

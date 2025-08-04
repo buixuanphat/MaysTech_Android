@@ -127,9 +127,9 @@ public class OrderActivity extends AppCompatActivity {
     ItemProductOrder convertProductInCartToOrder(ItemProductInCart itemProductInCart)
     {
         ItemProductOrder itemProductOrder = new ItemProductOrder();
-        itemProductOrder.setProductId(itemProductInCart.getProdId());
-        itemProductOrder.setName(itemProductInCart.getName());
-        itemProductOrder.setImage(itemProductInCart.getImage());
+        itemProductOrder.setProductId(itemProductInCart.getProductId());
+        itemProductOrder.setName(itemProductInCart.getProductName());
+        itemProductOrder.setImage(itemProductInCart.getProductImage());
         itemProductOrder.setTotalAmount(itemProductInCart.getAmount());
         itemProductOrder.setTotalPrice(itemProductInCart.getTotalPrice());
         return itemProductOrder;

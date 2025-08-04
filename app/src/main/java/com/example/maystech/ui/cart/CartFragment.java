@@ -1,5 +1,8 @@
 package com.example.maystech.ui.cart;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.example.maystech.data.model.Delivery;
+import com.example.maystech.utils.STATIC;
 import com.example.maystech.utils.SharedPrefManager;
 import com.example.maystech.data.model.ItemProductInCart;
 import com.example.maystech.data.model.User;
@@ -55,7 +59,7 @@ public class CartFragment extends Fragment {
         productCartAdapter = new ProductCartAdapter(new ProductCartAdapter.OnClick() {
             @Override
             public void onAdd(ItemProductInCart itemProductInCart) {
-                viewModel.addProductToCart(token, user.getId(), itemProductInCart.getProdId());
+                viewModel.addProductToCart(token, user.getId(), itemProductInCart.getProductId());
             }
 
             @Override
@@ -66,7 +70,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onClick(ItemProductInCart itemProductInCart) {
                 Intent intent = new Intent(requireContext(), ProductDetailsActivity.class);
-                intent.putExtra("prodId", itemProductInCart.getProdId());
+                intent.putExtra("prodId", itemProductInCart.getProductId());
                 startActivity(intent);
             }
 
@@ -91,6 +95,14 @@ public class CartFragment extends Fragment {
             productCartAdapter.setData(products);
             itemProductInCarts.clear();
             itemProductInCarts.addAll(products);
+            if(itemProductInCarts.isEmpty())
+            {
+                binding.tvLabel.setVisibility(VISIBLE);
+            }
+            else
+            {
+                binding.tvLabel.setVisibility(GONE);
+            }
         });
 
 
@@ -99,9 +111,22 @@ public class CartFragment extends Fragment {
         });
 
         viewModel.getTotal().observe(getViewLifecycleOwner(), total -> {
-            binding.tvPriceTotalChosen.setText("Tổng: " + String.valueOf(total.getTotalPrice()));
-            binding.tvAmountTotalChosen.setText("Đã chọn: "+ String.valueOf(total.getTotalAmount()));
-            delivery = total;
+            if(total.getTotalPrice()>0)
+            {
+                binding.tvAmountTotalChosen.setVisibility(VISIBLE);
+                binding.tvPriceTotalChosen.setVisibility(VISIBLE);
+                binding.btnOrder.setVisibility(VISIBLE);
+                binding.tvPriceTotalChosen.setText("Tổng: " + STATIC.formatPrice(total.getTotalPrice()));
+                binding.tvAmountTotalChosen.setText("Đã chọn: "+ String.valueOf(total.getTotalAmount()));
+                delivery = total;
+            }
+            else
+            {
+                binding.tvAmountTotalChosen.setVisibility(GONE);
+                binding.tvPriceTotalChosen.setVisibility(GONE);
+                binding.btnOrder.setVisibility(GONE);
+            }
+
         });
 
         binding.btnOrder.setOnClickListener( v -> {

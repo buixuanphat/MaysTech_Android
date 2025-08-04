@@ -8,9 +8,6 @@ public class User {
     private String district;
     private String ward;
     private String addressDetails;
-    private int provinceId;
-    private int districtId;
-    private int wardId;
     private String phoneNumber;
     private String username;
     private String avatar;
@@ -87,29 +84,6 @@ public class User {
         this.addressDetails = addressDetails;
     }
 
-    public int getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(int provinceId) {
-        this.provinceId = provinceId;
-    }
-
-    public int getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(int districtId) {
-        this.districtId = districtId;
-    }
-
-    public int getWardId() {
-        return wardId;
-    }
-
-    public void setWardId(int wardId) {
-        this.wardId = wardId;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;

@@ -1,5 +1,6 @@
 package com.example.maystech.ui.home;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.maystech.databinding.ItemBannerBinding;
 import com.example.maystech.data.model.ProductHighlight;
+import com.example.maystech.ui.product_details.ProductDetailsActivity;
 
 import java.util.List;
 
@@ -30,6 +32,13 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
     @Override
     public void onBindViewHolder(@NonNull BannerViewHolder holder, int position) {
         Glide.with(holder.itemView.getContext()).load(bannerList.get(position).getImage()).into(holder.binding.ivImage);
+        holder.binding.ivImage.setOnClickListener(v ->
+        {
+            Intent intent = new Intent(holder.itemView.getContext(), ProductDetailsActivity.class);
+            intent.putExtra("prodId", bannerList.get(position).getProductId());
+            holder.itemView.getContext().startActivity(intent);
+        });
+
     }
 
     @Override

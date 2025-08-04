@@ -1,5 +1,7 @@
 package com.example.maystech.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Product {
     private Integer id;
     private String name;
@@ -8,6 +10,7 @@ public class Product {
     private String image;
     private Integer stock;
     private Double salePrice;
+    @SerializedName("sale")
     private Boolean isSale;
     private Boolean active;
     private Double weight;
