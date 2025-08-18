@@ -47,8 +47,7 @@ public class ProductCartAdapter extends RecyclerView.Adapter<ProductCartAdapter.
         ItemProductInCart itemProductInCart = products.get(position);
         holder.binding.tvName.setText(itemProductInCart.getProductName());
         holder.binding.tvPrice.setText(STATIC.formatPrice(itemProductInCart.getProductPrice()));
-        holder.binding.tvPriceTotal.setText(STATIC.formatPrice(itemProductInCart.getTotalPrice()));
-        holder.binding.tvAmountTotal.setText(String.valueOf(itemProductInCart.getAmount()));
+        holder.binding.tvAmount.setText("Số lượng: " + String.valueOf(itemProductInCart.getAmount()));
         Glide.with(holder.binding.getRoot().getContext()).load(itemProductInCart.getProductImage()).into(holder.binding.ivImage);
         holder.binding.checkBox.setChecked(itemProductInCart.isChosen());
         holder.binding.btnAdd.setOnClickListener(v -> {onClick.onAdd(products.get(position));});

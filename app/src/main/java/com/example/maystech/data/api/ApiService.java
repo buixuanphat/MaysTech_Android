@@ -1,25 +1,21 @@
 package com.example.maystech.data.api;
 
+import androidx.annotation.Nullable;
+
+import com.example.maystech.data.model.BestSellingProduct;
 import com.example.maystech.data.model.Comment;
 import com.example.maystech.data.model.ItemProductOrder;
+import com.example.maystech.data.model.Location;
 import com.example.maystech.data.model.ProductHighlight;
 import com.example.maystech.data.model.Rating;
-import com.example.maystech.data.model.ShippingFeeRequest;
-import com.example.maystech.data.model.ShippingFeeResponse;
-import com.example.maystech.data.model.ShippingServiceRequest;
-import com.example.maystech.data.model.ShippingServiceResponse;
-import com.example.maystech.utils.STATIC;
 import com.example.maystech.data.model.AddToCartRequest;
 import com.example.maystech.data.model.Brand;
 import com.example.maystech.data.model.Category;
 import com.example.maystech.data.model.Delivery;
-import com.example.maystech.data.model.District;
 import com.example.maystech.data.model.ItemProductInCart;
 import com.example.maystech.data.model.Product;
 import com.example.maystech.data.model.ProductImage;
-import com.example.maystech.data.model.Province;
 import com.example.maystech.data.model.User;
-import com.example.maystech.data.model.Ward;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -30,7 +26,6 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -46,17 +41,16 @@ public interface ApiService {
 
     // === PRODUCT ===
     @GET("products")
-    Call<ApiResponse<List<Product>>> getProducts();
-
-    @GET("products/category/{catId}")
-    Call<ApiResponse<List<Product>>> getProductOfCategory(@Path("catId") int catId);
-
-    @GET("products/category/{catId}/brand/{brandId}")
-    Call<ApiResponse<List<Product>>> getProductOfCategoryAndBrand(@Path("catId") int catId, @Path("brandId") int brandId);
-
+    Call<ApiResponse<List<Product>>> getProducts(@Nullable @Query("categoryId") Integer categoryId, @Nullable @Query("brandId") Integer brandId);
 
     @GET("products/{prodId}")
     Call<ApiResponse<Product>> getProduct(@Path("prodId") int prodId);
+
+    @GET("products/new")
+    Call<ApiResponse<List<Product>>> getNewProduct();
+
+    @GET("products/search")
+    Call<ApiResponse<List<Product>>> searchProductByName(@Query("kw") String kw);
 
 
     // === PRODUCT-HIGHLIGHT ===
@@ -110,40 +104,11 @@ public interface ApiService {
             @Header("Authorization") String token
             );
 
-
-    // === GHN ===
-    @GET("master-data/province")
-    @Headers({"Token: "+ STATIC.TOKEN})
-    Call<GhnApiResponse<Province>> getProvince();
-
-    @POST("master-data/district")
-    Call<GhnApiResponse<District>> getDistrict(
-            @Header("Token") String token,
-            @Body JsonObject body
+    @DELETE("user-product/delete/{userId}")
+    Call <ApiResponse<Void>> deleteSelected(
+            @Path("userId") int userId,
+            @Header("Authorization") String token
     );
-
-    @POST("master-data/ward")
-    Call<GhnApiResponse<Ward>> getWard(
-            @Header("Token") String token,
-            @Body JsonObject body
-    );
-
-    @POST("v2/shipping-order/available-services")
-    @Headers("Content-Type: application/json")
-    Call<GhnApiResponse<ShippingServiceResponse>> getService(
-            @Header("Token") String token,
-            @Body ShippingServiceRequest body
-    );
-
-
-    @POST("v2/shipping-order/fee")
-    @Headers("Content-Type: application/json")
-    Call<ApiResponse<ShippingFeeResponse>> getShippingFee(
-            @Header("Token") String token,
-            @Header("ShopId") int shopId,
-            @Body ShippingFeeRequest body
-            );
-
 
     // === USER ===
     @POST("auth/login")
@@ -164,8 +129,11 @@ public interface ApiService {
 
 
     // === DELIVERY ===
-    @GET("deliveries/{userId}")
-    Call<ApiResponse<List<Delivery>>> getDeliveryList(@Header("Authorization") String token, @Path("userId") int userId, @Query("status") String status);
+    @GET("deliveries/user/{userId}/{status}")
+    Call<ApiResponse<List<Delivery>>> getDeliveryList(@Path("userId") int userId, @Path("status") String status);
+
+    @GET("deliveries/{id}")
+    Call<ApiResponse<Delivery>> getDeliveryById(@Path("id") int id);
 
     @POST("deliveries")
     Call<ApiResponse<Delivery>> addDelivery(@Header("Authorization") String token ,@Body JsonObject body);
@@ -173,12 +141,19 @@ public interface ApiService {
     @PATCH("deliveries/{id}")
     Call<ApiResponse<Delivery>> updateFeedbackStatus(@Path("id") int id);
 
+    @GET("deliveries/best-selling")
+    Call<ApiResponse<List<BestSellingProduct>>> getBestSellingProduct();
+
+    @PATCH("deliveries/cancel/request/{id}")
+    Call<ApiResponse<Delivery>> requestCancel(@Path("id") int id);
+
+
     // === DELIVERY DETAILS ===
     @GET("delivery-details/{deliveryId}")
     Call<ApiResponse<List<ItemProductOrder>>> getProductInDelivery(@Path("deliveryId") int deliveryId);
 
-    @POST("delivery-details/{deliveryId}")
-    Call<ApiResponse<List<ItemProductOrder>>> addProductToDelivery ( @Path("deliveryId") int deliveryId, @Body List<ItemProductOrder> body);
+    @POST("delivery-details")
+    Call<ApiResponse<List<ItemProductOrder>>> addProductToDelivery ( @Body List<ItemProductOrder> body);
 
     // === FEEDBACK ===
     @GET("comments/{prodId}")
@@ -193,4 +168,14 @@ public interface ApiService {
     @POST("ratings")
     Call<ApiResponse<Rating>> addRating(@Body JsonObject body);
 
+
+    // === API PROVINCE ===
+    @GET("https://provinces.open-api.vn/api/v1/")
+    Call<List<Location>> getProvinceList();
+
+    @GET("https://provinces.open-api.vn/api/v1/p/{provinceId}?depth=2")
+    Call<JsonObject> getDistrictList(@Path("provinceId") int provinceId);
+
+    @GET("https://provinces.open-api.vn/api/v1/d/{districtId}?depth=2")
+    Call<JsonObject> getWardList(@Path("districtId") int districtId);
 }

@@ -101,15 +101,19 @@ public class ProductDetailViewModel extends ViewModel {
         productImageRepository.getImageOfProduct(prodId, new Callback<ApiResponse<List<ProductImage>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<ProductImage>>> call, Response<ApiResponse<List<ProductImage>>> response) {
-                if(response.isSuccessful())
+                if(response.isSuccessful() && response.body()!=null)
                 {
                     productImages.setValue(response.body().getData());
+                }
+                else
+                {
+                    Log.e("Fetch image of product error", response.code()+"");
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<ProductImage>>> call, Throwable t) {
-                Log.e("error", Objects.requireNonNull(t.getMessage()));
+                Log.e("Fetch image of product failure", Objects.requireNonNull(t.getMessage()));
             }
         });
     }
@@ -119,11 +123,19 @@ public class ProductDetailViewModel extends ViewModel {
         userProductRepository.addProductToCart(token , userId, prodId, new Callback<ApiResponse<ItemProductInCart>>() {
             @Override
             public void onResponse(Call<ApiResponse<ItemProductInCart>> call, Response<ApiResponse<ItemProductInCart>> response) {
-                if(response.isSuccessful()) addToCartMessage.setValue("Thêm sản phẩm vào giỏ hàng thành công");
+                if(response.isSuccessful() && response.body()!=null)
+                {
+                    addToCartMessage.setValue("Thêm sản phẩm vào giỏ hàng thành công");
+                }
+                else
+                {
+                    Log.e("Add procut to cart error", response.code()+"");
+                }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<ItemProductInCart>> call, Throwable t) {
+                Log.e("Add product to cart failure", t.getMessage());
                 addToCartMessage.setValue(t.getMessage());
             }
         });

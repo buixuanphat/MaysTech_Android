@@ -40,4 +40,10 @@ public class UserProductRepository {
         apiService.choose(id, isChosen, token).enqueue(callback);
     }
 
+    public void deleteSelected (int userId, String token, Callback<ApiResponse<Void>> callback)
+    {
+        apiService.deleteSelected(userId, token).enqueue(callback);
+    }
+
+
 }

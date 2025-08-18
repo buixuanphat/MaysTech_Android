@@ -17,9 +17,9 @@ public class DeliveryDetailsRepository {
         apiService.getProductInDelivery(deliveryId).enqueue(callback);
     }
 
-    public void addProductToDelivery(int deliveryId , List<ItemProductOrder> body, Callback<ApiResponse<List<ItemProductOrder>>> callback)
+    public void addProductToDelivery(List<ItemProductOrder> body, Callback<ApiResponse<List<ItemProductOrder>>> callback)
     {
-        apiService.addProductToDelivery(deliveryId, body).enqueue(callback);
+        apiService.addProductToDelivery(body).enqueue(callback);
     }
 
 }

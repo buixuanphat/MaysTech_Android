@@ -19,6 +19,7 @@ import com.example.maystech.databinding.FragmentPreparingBinding;
 import com.example.maystech.ui.profile.ProductOrderAdapter;
 import com.example.maystech.utils.STATIC;
 import com.example.maystech.utils.SharedPrefManager;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -33,40 +34,43 @@ public class PreparingFragment extends Fragment {
     MutableLiveData<List<Delivery>> deliveryList;
 
     @Override
+    public void onResume() {
+        super.onResume();
+        SharedPrefManager pref = SharedPrefManager.getInstance(requireContext());
+        User u = pref.getUserInfo();
+        fetchDeliveryOfUser(u.getId(), STATIC.PREPARING);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPreparingBinding.inflate(inflater, container, false);
 
-       deliveryList = new MutableLiveData<>();
+        deliveryList = new MutableLiveData<>();
 
-       deliveryRepository = new DeliveryRepository();
+        deliveryRepository = new DeliveryRepository();
 
-        SharedPrefManager pref = SharedPrefManager.getInstance(requireContext());
-        User u = pref.getUserInfo();
-        String token = "Bearer " + pref.getToken();
+
 
         ProductOrderAdapter productOrderAdapter = new ProductOrderAdapter(requireContext());
         binding.rvPreparingProduct.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.rvPreparingProduct.setAdapter(productOrderAdapter);
 
-       deliveryList.observe(getViewLifecycleOwner(), productOrderAdapter::setData);
-
-       fetchDeliveryOfUser(token, u.getId(), STATIC.PREPARING);
+        deliveryList.observe(getViewLifecycleOwner(), d ->
+        {
+            productOrderAdapter.setData(d);
+        });
 
         return binding.getRoot();
     }
 
-    void fetchDeliveryOfUser(String token ,int userId, String status)
-    {
-        deliveryRepository.getDeliveryOfUser(token, userId, status, new Callback<ApiResponse<List<Delivery>>>() {
+    void fetchDeliveryOfUser(int userId, String status) {
+        deliveryRepository.getDeliveryOfUser(userId, status, new Callback<ApiResponse<List<Delivery>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Delivery>>> call, Response<ApiResponse<List<Delivery>>> response) {
-                if (response.isSuccessful() && response.body() != null)
-                {
+                if (response.isSuccessful() && response.body() != null) {
                     deliveryList.setValue(response.body().getData());
-                }
-                else
-                {
-                    Log.e("Fetch delivery error", response.code()+"");
+                } else {
+                    Log.e("Fetch delivery error", response.code() + "");
                 }
             }
 

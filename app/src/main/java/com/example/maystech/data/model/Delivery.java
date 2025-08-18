@@ -4,46 +4,54 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Delivery implements Serializable {
-    private int id;
-    private int userId;
-    private LocalDate startDate;
-    private LocalDate receivedDate;
+    private Integer id;
+    private Integer userId;
+    private String startDate;
+    private String receivedDate;
     private String status;
-    private boolean cancellationRequest;
-    private double totalPrice;
-    private int totalAmount;
-    private boolean hasFeedback;
+    private Boolean cancellationRequest;
+    private Double totalPrice;
+    private Integer totalAmount;
+    private Boolean hasFeedback;
+    private String username;
+    private String phoneNumber;
     private String address;
 
-    public int getId() {
+    private int productId;
+    private String productName;
+    private String productImage;
+    private int productTotalAmount;
+    private double productTotalPrice;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getReceivedDate() {
+    public String getReceivedDate() {
         return receivedDate;
     }
 
-    public void setReceivedDate(LocalDate receivedDate) {
+    public void setReceivedDate(String receivedDate) {
         this.receivedDate = receivedDate;
     }
 
@@ -55,36 +63,52 @@ public class Delivery implements Serializable {
         this.status = status;
     }
 
-    public boolean isCancellationRequest() {
+    public Boolean getCancellationRequest() {
         return cancellationRequest;
     }
 
-    public void setCancellationRequest(boolean cancellationRequest) {
+    public void setCancellationRequest(Boolean cancellationRequest) {
         this.cancellationRequest = cancellationRequest;
     }
 
-    public double getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public int getTotalAmount() {
+    public Integer getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(int totalAmount) {
+    public void setTotalAmount(Integer totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public boolean isHasFeedback() {
+    public Boolean getHasFeedback() {
         return hasFeedback;
     }
 
-    public void setHasFeedback(boolean hasFeedback) {
+    public void setHasFeedback(Boolean hasFeedback) {
         this.hasFeedback = hasFeedback;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {
@@ -93,5 +117,45 @@ public class Delivery implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
+
+    public int getProductTotalAmount() {
+        return productTotalAmount;
+    }
+
+    public void setProductTotalAmount(int productTotalAmount) {
+        this.productTotalAmount = productTotalAmount;
+    }
+
+    public double getProductTotalPrice() {
+        return productTotalPrice;
+    }
+
+    public void setProductTotalPrice(double productTotalPrice) {
+        this.productTotalPrice = productTotalPrice;
     }
 }

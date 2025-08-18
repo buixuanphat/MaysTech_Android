@@ -36,14 +36,6 @@
                 android:text="Tên sản phẩm" />
 
             <TextView
-                android:id="@+id/tv_price"
-                style="@style/text_normal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="0 VND"
-                android:layout_marginTop="4dp"/>
-
-            <TextView
                 android:id="@+id/tv_amount_total"
                 style="@style/text_normal"
                 android:layout_width="match_parent"
@@ -75,6 +67,7 @@
 
 
     <TextView
+        android:id="@+id/btn_more"
         style="@style/text_normal"
         android:layout_width="match_parent"
         android:textColor="@color/dark_gray"
@@ -84,6 +77,17 @@
         android:gravity="center"
         android:padding="8dp"
         android:layout_marginTop="4dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_feedback"
+        style="@style/blue_button"
+        android:layout_width="match_parent"
+        android:text="Đánh giá"
+        android:gravity="center"
+        android:padding="8dp"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        />
 
 
 </LinearLayout>

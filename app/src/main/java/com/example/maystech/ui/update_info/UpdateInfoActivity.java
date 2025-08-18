@@ -4,7 +4,6 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,54 +11,33 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.lifecycle.MutableLiveData;
-
 import com.bumptech.glide.Glide;
 import com.example.maystech.R;
+import com.example.maystech.data.model.Location;
 import com.example.maystech.utils.SharedPrefManager;
-import com.example.maystech.data.model.District;
-import com.example.maystech.data.model.Province;
 import com.example.maystech.data.model.User;
-import com.example.maystech.data.model.Ward;
 import com.example.maystech.databinding.ActivityUpdateInfoBinding;
 import com.example.maystech.ui.login.LoginActivity;
 import com.google.gson.JsonObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 
 public class UpdateInfoActivity extends AppCompatActivity {
 
     private ActivityUpdateInfoBinding binding;
     private UpdateInfoViewModel viewModel;
-    private List<Province> provinceList;
-    private List<District> districtList;
-    private List<Ward> wardList;
+    private List<Location> provinceList;
+    private List<Location> districtList;
+    private List<Location> wardList;
 
     private User user;
     private Uri avatarUri;
@@ -104,15 +82,15 @@ public class UpdateInfoActivity extends AppCompatActivity {
             binding.lnInput.setVisibility(VISIBLE);
             binding.lnGeneralAddress.setVisibility(GONE);
 
-            viewModel.fetchProvincesList();
+            viewModel.fetchProvinceList();
         });
 
 
         // === SETUP CÁC SPINNER ===
-        ArrayAdapter<Province> provinceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinceList);
+        ArrayAdapter<Location> provinceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinceList);
         binding.spinnerProvince.setAdapter(provinceAdapter);
 
-        viewModel.getProvincesList().observe(this, l ->
+        viewModel.getProvinceList().observe(this, l ->
         {
             provinceList.clear();
             provinceList.addAll(l);
@@ -120,23 +98,23 @@ public class UpdateInfoActivity extends AppCompatActivity {
         });
 
 
-        ArrayAdapter<District> districtAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, districtList);
+        ArrayAdapter<Location> districtAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, districtList);
         binding.spinnerDistrict.setAdapter(districtAdapter);
 
-        viewModel.getDistrictsList().observe(this, l ->
+        viewModel.getDistrictList().observe(this, l ->
         {
             districtList.clear();
             districtList.addAll(l);
             districtAdapter.notifyDataSetChanged();
 
-            viewModel.fetchWardList(l.get(0).getId());
+            viewModel.fetchWardList(l.get(0).getCode());
         });
 
 
-        ArrayAdapter<Ward> wardAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, wardList);
+        ArrayAdapter<Location> wardAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, wardList);
         binding.spinnerWard.setAdapter(wardAdapter);
 
-        viewModel.getWardsList().observe(this, l -> {
+        viewModel.getWardList().observe(this, l -> {
             wardList.clear();
             wardList.addAll(l);
             wardAdapter.notifyDataSetChanged();
@@ -147,7 +125,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
         binding.spinnerProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.fetchDistrictList(((Province) binding.spinnerProvince.getSelectedItem()).getId());
+                viewModel.fetchDistrictList(((Location) binding.spinnerProvince.getSelectedItem()).getCode());
             }
 
             @Override
@@ -160,7 +138,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
         binding.spinnerDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.fetchWardList(((District) binding.spinnerDistrict.getSelectedItem()).getId());
+                viewModel.fetchWardList(((Location) binding.spinnerDistrict.getSelectedItem()).getCode());
             }
 
             @Override
@@ -200,19 +178,22 @@ public class UpdateInfoActivity extends AppCompatActivity {
         // === LƯU THÔNG TIN ===
         binding.btnSaveInfo.setOnClickListener( v ->
         {
-            binding.btnSaveInfo.setClickable(false);
-            binding.progressBar.setVisibility(VISIBLE);
             if(!provinceList.isEmpty())
             {
                 String phoneNumber = binding.edtPhoneNumber.getText().toString().trim();
                 String addressDetails = binding.edtAddressDetails.getText().toString().trim();
-                Province province = (Province) binding.spinnerProvince.getSelectedItem();
-                District district = (District) binding.spinnerDistrict.getSelectedItem();
-                Ward ward = (Ward) binding.spinnerWard.getSelectedItem();
+                String username = binding.edtUsername.getText().toString().trim();
+                Location province = (Location) binding.spinnerProvince.getSelectedItem();
+                Location district = (Location) binding.spinnerDistrict.getSelectedItem();
+                Location ward = (Location) binding.spinnerWard.getSelectedItem();
 
                 if(phoneNumber.isEmpty())
                 {
                     binding.edtPhoneNumber.setError("Số điện thoại không được để trống");
+                }
+                else if(username.length()<=3)
+                {
+                    binding.edtUsername.setError("Tên người dùng phải lớn hơn 3 kí tự");
                 }
                 else if(phoneNumber.length()!=10 )
                 {
@@ -226,15 +207,16 @@ public class UpdateInfoActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    binding.btnSaveInfo.setClickable(false);
+                    binding.progressBar.setVisibility(VISIBLE);
+
                     JsonObject body = new JsonObject();
                     body.addProperty("province", province.getName());
                     body.addProperty("district", district.getName());
                     body.addProperty("ward", ward.getName());
                     body.addProperty("addressDetails", addressDetails);
-                    body.addProperty("provinceId", province.getId());
-                    body.addProperty("districtId", district.getId());
-                    body.addProperty("wardId", ward.getId());
                     body.addProperty("phoneNumber", phoneNumber);
+                    body.addProperty("username", username);
 
                     viewModel.updateUserInfo(token, user.getId(), body);
 
@@ -250,7 +232,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
                 viewModel.uploadImageToCloudinary(this, avatarUri);
             }
 
-            if(avatarUri == null && provinceList.isEmpty())
+            if(avatarUri == null && provinceList.isEmpty() )
             {
                 Toast.makeText(this, "Bạn chưa thực hiện thay đổi nào", Toast.LENGTH_SHORT).show();
             }

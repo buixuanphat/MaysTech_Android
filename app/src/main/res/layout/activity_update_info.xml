@@ -77,6 +77,26 @@
             </FrameLayout>
 
 
+            <TextView
+                android:id="@+id/tv_tittle_username"
+                style="@style/text_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:paddingHorizontal="6dp"
+                android:text="Tên người dùng"
+                android:textSize="12sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_username"
+                style="@style/edittext_grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/shape_layout_rounded_10dp"
+                android:backgroundTint="@color/grey"
+                android:hint="Tên người dùng" />
+
 
             <TextView
                 android:id="@+id/tv_tittle_phone_number"
@@ -86,7 +106,8 @@
                 android:layout_marginHorizontal="16dp"
                 android:paddingHorizontal="6dp"
                 android:text="Số điện thoại"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_phone_number"

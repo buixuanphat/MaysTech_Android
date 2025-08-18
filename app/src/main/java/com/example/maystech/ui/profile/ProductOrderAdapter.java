@@ -1,43 +1,36 @@
 package com.example.maystech.ui.profile;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.maystech.data.api.ApiResponse;
 import com.example.maystech.data.model.Delivery;
-import com.example.maystech.data.model.ItemProductInCart;
-import com.example.maystech.data.model.ItemProductOrder;
-import com.example.maystech.data.repository.DeliveryDetailsRepository;
 import com.example.maystech.databinding.ItemProductInOrderListBinding;
+import com.example.maystech.ui.feedback.FeedbackActivity;
+import com.example.maystech.ui.order_detail.OrderDetailActivity;
+import com.example.maystech.utils.STATIC;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapter.ProductOrderViewHolder> {
 
     private List<Delivery> deliveryList;
-    private ItemProductInCart item;
     private Context context;
-    private DeliveryDetailsRepository deliveryDetailsRepository;
 
     public ProductOrderAdapter(Context context) {
         this.deliveryList = new ArrayList<>();
         this.context = context;
-        this.deliveryDetailsRepository = new DeliveryDetailsRepository();
     }
 
     @NonNull
@@ -50,35 +43,36 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
     @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull ProductOrderViewHolder holder, int position) {
-        Delivery delivery = deliveryList.get(position);
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        holder.binding.tvTotalOrder.setText(String.format("Tổng (%d sản phẩm)\n %s", delivery.getTotalAmount(), formatter.format(delivery.getTotalPrice())));
+       Delivery delivery = deliveryList.get(position);
+       Glide.with(context).load(delivery.getProductImage()).into(holder.binding.ivImage);
+       holder.binding.tvName.setText(delivery.getProductName());
+       holder.binding.tvAmountTotal.setText("Số lượng: "+ String.valueOf(delivery.getTotalAmount()));
+       holder.binding.tvPriceTotal.setText("Tổng: "+ STATIC.formatPrice(delivery.getTotalPrice()));
+       holder.binding.tvTotalOrder.setText(STATIC.formatPrice(delivery.getTotalPrice()));
 
-        MutableLiveData<ItemProductOrder> item = new MutableLiveData<>();
-        item.observe((LifecycleOwner) context, i ->
-        {
-            Glide.with(context).load(i.getImage()).into(holder.binding.ivImage);
-            holder.binding.tvName.setText(i.getName());
-            holder.binding.tvPrice.setText(String.valueOf(i.getTotalPrice()));
-            holder.binding.tvAmountTotal.setText( "Số lượng: " +String.valueOf(i.getTotalAmount()));
-            holder.binding.tvPriceTotal.setText("Thành tiền: " +String.valueOf(i.getTotalPrice()));
-        });
+       holder.binding.btnMore.setOnClickListener(v ->
+       {
+           Intent intent = new Intent(context, OrderDetailActivity.class);
+           intent.putExtra("deliveryId", delivery.getId());
+           context.startActivity(intent);
+       });
 
-        deliveryDetailsRepository.getProductInDelivery(delivery.getId(), new Callback<ApiResponse<List<ItemProductOrder>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<List<ItemProductOrder>>> call, Response<ApiResponse<List<ItemProductOrder>>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    item.setValue(response.body().getData().get(0));
-                } else {
-                    Log.e("Fetch product of delivery error", response.code() + "");
-                }
-            }
+       if(!delivery.getHasFeedback() && delivery.getStatus().equals(STATIC.DELIVERED) )
+       {
+           holder.binding.btnFeedback.setVisibility(VISIBLE);
+       }
+       else
+       {
+           holder.binding.btnFeedback.setVisibility(GONE);
+       }
 
-            @Override
-            public void onFailure(Call<ApiResponse<List<ItemProductOrder>>> call, Throwable t) {
-                Log.e("Fetch product in delivery failure", t.getMessage());
-            }
-        });
+       holder.binding.btnFeedback.setOnClickListener(v ->
+       {
+           Intent intent = new Intent(context, FeedbackActivity.class);
+           intent.putExtra("deliveryId", delivery.getId());
+           context.startActivity(intent);
+       });
+
 
     }
 
@@ -92,10 +86,6 @@ public class ProductOrderAdapter extends RecyclerView.Adapter<ProductOrderAdapte
         notifyDataSetChanged();
     }
 
-    public void setData(ItemProductInCart item) {
-        this.item = item;
-        notifyDataSetChanged();
-    }
 
     class ProductOrderViewHolder extends RecyclerView.ViewHolder {
         ItemProductInOrderListBinding binding;

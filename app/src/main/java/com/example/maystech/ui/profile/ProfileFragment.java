@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.example.maystech.data.model.User;
 import com.example.maystech.utils.SharedPrefManager;
 import com.example.maystech.databinding.FragmentProfileBinding;
 import com.example.maystech.ui.update_info.UpdateInfoActivity;
@@ -24,6 +26,9 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
 
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(requireContext());
+        User u = sharedPrefManager.getUserInfo();
+        Glide.with(requireContext()).load(u.getAvatar()).into(binding.ivAvatar);
+        binding.tvUsername.setText(u.getUsername());
 
         binding.btnDetail.setOnClickListener(v ->
         {

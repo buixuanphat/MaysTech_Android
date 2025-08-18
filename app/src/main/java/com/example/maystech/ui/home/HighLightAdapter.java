@@ -14,12 +14,18 @@ import com.example.maystech.ui.product_details.ProductDetailsActivity;
 
 import java.util.List;
 
-public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerViewHolder> {
+public class HighLightAdapter extends RecyclerView.Adapter<HighLightAdapter.BannerViewHolder> {
 
     private List<ProductHighlight> bannerList;
 
-    public BannerAdapter(List<ProductHighlight> bannerList) {
+    public HighLightAdapter(List<ProductHighlight> bannerList) {
         this.bannerList = bannerList;
+    }
+
+    public void setData(List<ProductHighlight> productHighlights)
+    {
+        this.bannerList = productHighlights;
+        notifyDataSetChanged();
     }
 
     @NonNull

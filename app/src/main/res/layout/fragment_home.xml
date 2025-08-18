@@ -24,6 +24,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
+            android:id="@+id/tv_username"
             style="@style/text_bold"
             android:text="User"
             android:layout_width="match_parent"
@@ -33,48 +34,118 @@
             tools:ignore="MissingConstraints" />
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/image_avatar_default"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CircularImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:scaleType="centerCrop"/>
 
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tv_banner"
-        style="@style/text_normal"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="16dp"
-        android:text="Nổi bậc"
-        android:textSize="26sp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/black"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/cl_hello"
-        tools:ignore="MissingConstraints" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/shape_layout_rounded_10dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_banner"
-        android:clipToOutline="true"
-        >
+        android:scrollbars="none">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_banner"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            tools:ignore="MissingConstraints" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="match_parent"
+                android:text="Nổi bật"
+                android:textSize="26sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                tools:ignore="MissingConstraints" />
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_layout_rounded_10dp"
+                android:clipToOutline="true">
+
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    tools:ignore="MissingConstraints" />
+
+
+            </LinearLayout>
+
+
+
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="match_parent"
+                android:text="Top bán chạy"
+                android:textSize="26sp"
+                android:layout_marginTop="40dp"
+                android:textColor="@color/black"
+                tools:ignore="MissingConstraints" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_layout_rounded_10dp"
+                android:clipToOutline="true">
+
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_best_sell"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    tools:ignore="MissingConstraints" />
+
+
+            </LinearLayout>
+
+
+
+
+
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="match_parent"
+                android:text="Sản phẩm mới"
+                android:textSize="26sp"
+                android:layout_marginTop="40dp"
+                android:textColor="@color/black"
+                tools:ignore="MissingConstraints" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_layout_rounded_10dp"
+                android:clipToOutline="true">
+
+
+                <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_new"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                tools:ignore="MissingConstraints" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

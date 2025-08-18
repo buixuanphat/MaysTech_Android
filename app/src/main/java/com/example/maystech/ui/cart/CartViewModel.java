@@ -119,15 +119,15 @@ public class CartViewModel extends ViewModel {
         });
     }
 
-    public void choose(String token ,int id, int isChosen)
+    public void choose(String token, int userId ,int id, int isChosen)
     {
         userProductRepository.choose(token , id, isChosen, new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if(response.isSuccessful())
                 {
-                    getTotalCart(token, 1);
-                    getProductInCart(token, 1);
+                    getTotalCart(token, userId);
+                    getProductInCart(token, userId);
                 }
             }
 
@@ -137,5 +137,28 @@ public class CartViewModel extends ViewModel {
             }
         });
     }
+
+    public void deleteSelected(int userId, String token)
+    {
+        userProductRepository.deleteSelected(userId, token, new Callback<ApiResponse<Void>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if(response.isSuccessful() && response.body()!=null)
+                {
+                    getProductInCart(token, userId);
+                }
+                else
+                {
+                    Log.e("Delete selected error", response.code()+"");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                Log.e("Delete selected failure", t.getMessage());
+            }
+        });
+    }
+
 
 }

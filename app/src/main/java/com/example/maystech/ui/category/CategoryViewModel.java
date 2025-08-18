@@ -2,6 +2,7 @@ package com.example.maystech.ui.category;
 
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -26,7 +27,7 @@ public class CategoryViewModel extends ViewModel {
     ProductRepository productRepository;
     BrandRepository brandRepository;
     MutableLiveData<List<Category>> categories;
-    MutableLiveData<List<Product>> products;
+    MutableLiveData<List<Product>> productList;
     MutableLiveData<List<Brand>> brands;
 
     public CategoryViewModel() {
@@ -34,36 +35,30 @@ public class CategoryViewModel extends ViewModel {
         this.categories = new MutableLiveData<>();
 
         this.productRepository = new ProductRepository();
-        this.products = new MutableLiveData<>();
+        this.productList = new MutableLiveData<>();
 
         this.brandRepository = new BrandRepository();
         this.brands = new MutableLiveData<>();
     }
 
-    public LiveData<List<Category>> getCategories()
-    {
+    public LiveData<List<Category>> getCategories() {
         return categories;
     }
 
-    public LiveData<List<Product>> getProducts()
-    {
-        return products;
+    public LiveData<List<Product>> getProductList() {
+        return productList;
     }
 
-    public LiveData<List<Brand>> getBrandOfCategory()
-    {
+    public LiveData<List<Brand>> getBrandOfCategory() {
         return brands;
     }
 
-    public void fetchCategories(OnDataLoaded onDataLoaded)
-    {
+    public void fetchCategories() {
         categoryRepository.getCategories(new Callback<ApiResponse<List<Category>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Category>>> call, Response<ApiResponse<List<Category>>> response) {
-                if(response.isSuccessful())
-                {
+                if (response.isSuccessful()) {
                     categories.setValue(response.body().getData());
-                    onDataLoaded.onDataLoaded(categories.getValue().get(0).getId());
                 }
             }
 
@@ -75,29 +70,34 @@ public class CategoryViewModel extends ViewModel {
     }
 
 
-    public void fetchProductOfCategory(int catId)
+    public void fetchProducts(@Nullable Integer categoryId, @Nullable Integer brandId)
     {
-        productRepository.getProductOfCategory(catId, new Callback<ApiResponse<List<Product>>>() {
+        productRepository.getProducts(categoryId , brandId , new Callback<ApiResponse<List<Product>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
-                if(response.isSuccessful()){
-                    products.setValue(response.body().getData());
+                if(response.isSuccessful() && response.body()!=null)
+                {
+                    productList.setValue(response.body().getData());
+                }
+                else
+                {
+                    Log.e("Fetch products error", response.code()+"");
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
-                Log.e("error", Objects.requireNonNull(t.getMessage()));
+                Log.e("Fetch products failure", t.getMessage());
             }
         });
     }
 
-    public void fetchBrandOfCategory(int catId)
-    {
+
+    public void fetchBrandOfCategory(int catId) {
         brandRepository.getBrandOfCategory(catId, new Callback<ApiResponse<List<Brand>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Brand>>> call, Response<ApiResponse<List<Brand>>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     brands.setValue(response.body().getData());
                 }
             }
@@ -109,24 +109,27 @@ public class CategoryViewModel extends ViewModel {
         });
     }
 
-    public void fetchProductOfCategoryAndBrand(int catId, int brandId)
+
+    public void searchProductByName(String kw)
     {
-        productRepository.getProductOfCategoryAndBrand(catId, brandId, new Callback<ApiResponse<List<Product>>>() {
+        productRepository.searchProductByName(kw, new Callback<ApiResponse<List<Product>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
-                products.setValue(response.body().getData());
+                if(response.isSuccessful() && response.body()!=null)
+                {
+                    productList.setValue(response.body().getData());
+                }
+                else
+                {
+                    Log.e("Search product error", response.code()+"");
+                }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
-                Log.e("error", Objects.requireNonNull(t.getMessage()));
+                Log.e("Search product failure", t.getMessage());
             }
         });
     }
 
-
-
 }
-interface OnDataLoaded{
-    void onDataLoaded(int firstItem);
-};

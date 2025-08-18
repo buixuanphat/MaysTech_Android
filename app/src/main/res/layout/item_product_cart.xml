@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:padding="8dp">
@@ -27,55 +28,43 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintWidth_percent="0.2"/>
 
-    <TextView
-        android:id="@+id/tv_name"
-        style="@style/text_normal"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Tên sản phẩm"
-        app:layout_constraintStart_toEndOf="@id/iv_image"
-        app:layout_constraintTop_toTopOf="@id/iv_image"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintEnd_toStartOf="@+id/btn_add"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_image"
+        android:orientation="vertical"
+        android:padding="6dp">
 
-    <TextView
-        android:id="@+id/tv_price"
-        style="@style/text_normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0 VND"
-        app:layout_constraintStart_toEndOf="@id/iv_image"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"
-        android:layout_marginTop="4dp" />
 
-    <TextView
-        android:id="@+id/tv_prefix_amount"
-        style="@style/text_normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Số lượng: "
-        app:layout_constraintStart_toEndOf="@id/iv_image"
-        app:layout_constraintTop_toBottomOf="@id/tv_price"
-        android:layout_marginTop="4dp" />
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tên sản phẩm"
+            />
 
-    <TextView
-        android:id="@+id/tv_amount_total"
-        style="@style/text_normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        app:layout_constraintLeft_toRightOf="@id/tv_prefix_amount"
-        app:layout_constraintTop_toBottomOf="@id/tv_price"
-        android:layout_marginTop="4dp" />
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/text_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0 VND"
+            />
 
-    <TextView
-        android:id="@+id/tv_price_total"
-        style="@style/text_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tổng: 0 VND"
-        app:layout_constraintStart_toStartOf="@id/tv_prefix_amount"
-        app:layout_constraintTop_toBottomOf="@id/tv_amount_total"
-        android:layout_marginTop="4dp" />
+        <TextView
+            android:id="@+id/tv_amount"
+            style="@style/text_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số lượng: "
+            />
+
+
+    </LinearLayout>
 
 
         <ImageButton
@@ -86,8 +75,8 @@
             android:src="@drawable/ic_add_24px"
             android:contentDescription="Tăng số lượng"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_name"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_remove"/>
 
         <ImageButton
             android:id="@+id/btn_remove"
@@ -97,7 +86,8 @@
             android:src="@drawable/ic_remove_24px"
             android:contentDescription="Giảm số lượng"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_add"/>
+            app:layout_constraintTop_toBottomOf="@id/btn_add"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 

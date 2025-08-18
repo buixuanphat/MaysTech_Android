@@ -45,11 +45,13 @@ public class OrderActivityViewModel extends ViewModel {
         return this.message;
     }
 
-    public void postDelivery(int userId , String token, Delivery delivery)
+    public void postDelivery(String token, User user ,Delivery delivery)
     {
         JsonObject body = new JsonObject();
-        body.addProperty("userId", userId);
-        body.addProperty("startDate", delivery.getStartDate().toString());
+        body.addProperty("userId", user.getId());
+        body.addProperty("phoneNumber", user.getPhoneNumber());
+        body.addProperty("username", user.getUsername());
+        body.addProperty("address", String.format("%s, %s, %s, %s",user.getProvince(),user.getDistrict(),user.getWard(),user.getAddressDetails()));
         body.addProperty("totalPrice", delivery.getTotalPrice());
         body.addProperty("totalAmount", delivery.getTotalAmount());
 
@@ -59,28 +61,35 @@ public class OrderActivityViewModel extends ViewModel {
                 if(response.isSuccessful() && response.body()!=null)
                 {
                     deliveryLiveData.setValue(response.body().getData());
+                    message.setValue("Đặt hàng thành công");
                 }
                 else
                 {
-                    Log.e("Post delivery error", response.code()+"");
+                    message.setValue("Lỗi! Đặt hàng không thành công");
+                    try {
+                        Log.e("Post delivery error", response.errorBody().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<Delivery>> call, Throwable t) {
                 Log.e("Post delivery failure", t.getMessage());
+                message.setValue("Lỗi! Đặt hàng không thành công");
             }
         });
     }
 
-    public void postProductToDelivery(int deliveryId ,List<ItemProductOrder> productOrders)
+    public void postProductToDelivery(List<ItemProductOrder> productOrders)
     {
-        deliveryDetailsRepository.addProductToDelivery(deliveryId, productOrders, new Callback<ApiResponse<List<ItemProductOrder>>>() {
+        deliveryDetailsRepository.addProductToDelivery(productOrders, new Callback<ApiResponse<List<ItemProductOrder>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<ItemProductOrder>>> call, Response<ApiResponse<List<ItemProductOrder>>> response) {
                 if(response.isSuccessful() && response.body()!=null)
                 {
-                    message.setValue("Đặt hàng thành công");
+                    Log.e("Post product to delivery success", response.code()+"");
                 }
                 else
                 {

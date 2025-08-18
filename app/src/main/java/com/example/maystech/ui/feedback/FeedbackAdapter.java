@@ -46,8 +46,8 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
     public void onBindViewHolder(@NonNull FeedbackViewHolder holder, int position) {
         Feedback feedback = producList.get(position);
         ItemProductOrder item = producList.get(position).getProduct();
-        Glide.with(context).load(item.getImage()).into(holder.binding.ivImage);
-        holder.binding.tvName.setText(item.getName());
+        Glide.with(context).load(item.getProductImage()).into(holder.binding.ivImage);
+        holder.binding.tvName.setText(item.getProductName());
         holder.binding.ratingBar.setRating(5);
         feedback.setRating(5);
 

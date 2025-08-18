@@ -12,40 +12,58 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tv_amount_total_chosen"
-        app:layout_constraintBaseline_toTopOf="parent"/>
+        app:layout_constraintBaseline_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_amount_total_chosen"
         android:text="Đã chọn 0"
         android:layout_width="match_parent"
-        style="@style/text_normal"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="6dp"
         app:layout_constraintBottom_toTopOf="@id/tv_price_total_chosen"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/tv_price_total_chosen"
         android:text="0"
         android:layout_width="match_parent"
-        style="@style/text_bold"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_order"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
 
-
-    <com.google.android.material.button.MaterialButton
+    <LinearLayout
         android:id="@+id/btn_order"
         android:layout_width="match_parent"
-        style="@style/blue_button"
-        android:text="Mua"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="12dp"
+        android:background="@drawable/shape_layout_rounded_horizontal"
+        android:backgroundTint="@color/colorPrimary"
+        android:padding="10dp"
         android:visibility="gone"
-        />
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            style="@style/text_bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:text="Mua"/>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_label"

@@ -18,6 +18,7 @@ import com.example.maystech.data.model.User;
 import com.example.maystech.data.repository.DeliveryDetailsRepository;
 import com.example.maystech.data.repository.DeliveryRepository;
 import com.example.maystech.databinding.FragmentDeliveredBinding;
+import com.example.maystech.ui.profile.ProductOrderAdapter;
 import com.example.maystech.utils.STATIC;
 import com.example.maystech.utils.SharedPrefManager;
 
@@ -45,7 +46,7 @@ public class DeliveredFragment extends Fragment {
         pref = SharedPrefManager.getInstance(requireContext());
         token = "Bearer "+ pref.getToken();
         u = pref.getUserInfo();
-        fetchDelivery(token, u.getId());
+        fetchDeliveryOfUser(u.getId(), STATIC.DELIVERED);
     }
 
     @Override
@@ -58,21 +59,21 @@ public class DeliveredFragment extends Fragment {
         deliveryRepository =  new DeliveryRepository();
         deliveryDetailsRepository = new DeliveryDetailsRepository();
 
-        DeliveredAdapter deliveredAdapter = new DeliveredAdapter(requireContext());
+        ProductOrderAdapter productOrderAdapter = new ProductOrderAdapter(requireContext());
         binding.rvDeliveredProduct.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.rvDeliveredProduct.setAdapter(deliveredAdapter);
+        binding.rvDeliveredProduct.setAdapter(productOrderAdapter);
 
         deliveryList.observe(getViewLifecycleOwner(), d ->
         {
-            deliveredAdapter.setData(d);
+            productOrderAdapter.setData(d);
         });
 
-        return binding.getRoot();
+          return binding.getRoot();
     }
 
-    public void fetchDelivery(String token, int userId)
+    public void fetchDeliveryOfUser(int userId, String status)
     {
-        deliveryRepository.getDeliveryOfUser(token, userId, STATIC.DELIVERED, new Callback<ApiResponse<List<Delivery>>>() {
+        deliveryRepository.getDeliveryOfUser(userId, STATIC.DELIVERED, new Callback<ApiResponse<List<Delivery>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Delivery>>> call, Response<ApiResponse<List<Delivery>>> response) {
                 if(response.isSuccessful() && response.body()!=null)

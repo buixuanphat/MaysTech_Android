@@ -3,48 +3,22 @@ package com.example.maystech.data.model;
 import com.google.gson.annotations.SerializedName;
 
 public class Product {
-    private Integer id;
+    private int id;
     private String name;
-    private Double price;
+    private String imageUrl;
+    private double price;
     private String description;
-    private String image;
-    private Integer stock;
-    private Double salePrice;
-    @SerializedName("sale")
-    private Boolean isSale;
-    private Boolean active;
-    private Double weight;
+    private int stock;
+    private boolean active;
     private int categoryId;
     private int brandId;
+    private double salePrice;
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Product(Integer id, String name, Double price, String description, String image, Integer stock, Double salePrice, Boolean isSale, Boolean active, Double weight, int categoryId, int brandId) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.image = image;
-        this.stock = stock;
-        this.salePrice = salePrice;
-        this.isSale = isSale;
-        this.active = active;
-        this.weight = weight;
-        this.categoryId = categoryId;
-        this.brandId = brandId;
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -56,11 +30,19 @@ public class Product {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -72,44 +54,20 @@ public class Product {
         this.description = description;
     }
 
-    public Integer getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public Double getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(Double salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public Boolean getSale() {
-        return isSale;
-    }
-
-    public void setSale(Boolean sale) {
-        isSale = sale;
-    }
-
-    public Boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
     }
 
     public int getCategoryId() {
@@ -126,5 +84,13 @@ public class Product {
 
     public void setBrandId(int brandId) {
         this.brandId = brandId;
+    }
+
+    public double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(double salePrice) {
+        this.salePrice = salePrice;
     }
 }

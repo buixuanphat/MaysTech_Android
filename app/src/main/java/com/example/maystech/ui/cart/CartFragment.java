@@ -1,5 +1,6 @@
 package com.example.maystech.ui.cart;
 
+import static android.app.Activity.RESULT_OK;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -40,6 +41,16 @@ public class CartFragment extends Fragment {
     private List<ItemProductInCart> products;
     private Delivery delivery;
     private List<ItemProductInCart> itemProductInCarts;
+    User user;
+    String token;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            viewModel.deleteSelected(user.getId(), token);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,8 +61,8 @@ public class CartFragment extends Fragment {
         itemProductInCarts = new ArrayList<>();
 
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(requireContext());
-        User user = sharedPrefManager.getUserInfo();
-        String token = "Bearer "+ sharedPrefManager.getToken();
+        user = sharedPrefManager.getUserInfo();
+        token = "Bearer "+ sharedPrefManager.getToken();
 
         RecyclerView rvProduct = binding.rvProducts;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext() ,LinearLayoutManager.VERTICAL, false);
@@ -78,11 +89,11 @@ public class CartFragment extends Fragment {
             public void onCheck(CheckBox cb, ItemProductInCart itemProductInCart) {
                 if(!cb.isChecked())
                 {
-                    viewModel.choose( token, itemProductInCart.getId(), 0);
+                    viewModel.choose( token, user.getId(), itemProductInCart.getId(), 0);
                 }
                 else
                 {
-                    viewModel.choose(token , itemProductInCart.getId(), 1);
+                    viewModel.choose(token , user.getId() ,itemProductInCart.getId(), 1);
                 }
             }
         });
@@ -98,10 +109,16 @@ public class CartFragment extends Fragment {
             if(itemProductInCarts.isEmpty())
             {
                 binding.tvLabel.setVisibility(VISIBLE);
+                binding.tvAmountTotalChosen.setVisibility(GONE);
+                binding.tvPriceTotalChosen.setVisibility(GONE);
+                binding.btnOrder.setVisibility(GONE);
             }
             else
             {
                 binding.tvLabel.setVisibility(GONE);
+                binding.tvAmountTotalChosen.setVisibility(VISIBLE);
+                binding.tvPriceTotalChosen.setVisibility(VISIBLE);
+                binding.btnOrder.setVisibility(VISIBLE);
             }
         });
 
@@ -129,6 +146,7 @@ public class CartFragment extends Fragment {
 
         });
 
+
         binding.btnOrder.setOnClickListener( v -> {
             Intent intent = new Intent(requireContext(), OrderActivity.class);
             intent.putExtra("delivery", delivery);
@@ -143,7 +161,7 @@ public class CartFragment extends Fragment {
             }
 
             intent.putExtra("products", (Serializable) productChosen);
-            startActivity(intent);
+            startActivityForResult(intent, 100);
         });
 
         return binding.getRoot();

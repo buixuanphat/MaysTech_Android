@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity{
         if(sharedPrefManager.getToken()!="")
         {
             startActivity(intent);
+            finish();
         }
 
         binding.btnLogin.setOnClickListener(v -> {

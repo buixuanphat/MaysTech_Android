@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -59,6 +60,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             productImageAdapter.setData(images);
         });
 
+        // === NHẤN NÚT THÊM SẢN PHẨM VÀO GIỎ HÀNG ===
         binding.btnOrder.setOnClickListener(v -> {
             viewModel.addProductToCart(token, id, prodId);
         });
@@ -97,20 +99,42 @@ public class ProductDetailsActivity extends AppCompatActivity {
     void displayInfo(Product p)
     {
         binding.tvName.setText(p.getName());
-        if(p.getSale()==true)
-        {
-            binding.tvPrice.setVisibility(GONE);
-            binding.tvSalePrice.setVisibility(VISIBLE);
-            binding.tvOldPrice.setVisibility(VISIBLE);
-            binding.tvSalePrice.setText(STATIC.formatPrice(p.getSalePrice()));
-            binding.tvOldPrice.setText(STATIC.formatPrice(p.getPrice()));
-            binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
+        if(p.getStock()<=0)
+        {
+            binding.tvStock.setText("Hết hàng");
+            binding.btnOrder.setClickable(false);
         }
         else
         {
-            binding.tvPrice.setText(STATIC.formatPrice(p.getPrice()));
+            binding.tvStock.setText(String.format("Còn %d sản phẩm", p.getStock()));
         }
+
+        if(p.isActive()==true)
+        {
+            if(p.getSalePrice()!=-1)
+            {
+                binding.tvPrice.setVisibility(GONE);
+                binding.tvOldPrice.setVisibility(VISIBLE);
+                binding.tvSalePrice.setVisibility(VISIBLE);
+                binding.tvOldPrice.setVisibility(VISIBLE);
+                binding.tvSalePrice.setText(STATIC.formatPrice(p.getSalePrice()));
+                binding.tvOldPrice.setText(STATIC.formatPrice(p.getPrice()));
+                binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+            }
+            else
+            {
+                binding.tvPrice.setText(STATIC.formatPrice(p.getPrice()));
+            }
+        }
+        else
+        {
+            binding.tvPrice.setText("Ngừng kinh doanh");
+            binding.btnOrder.setClickable(false);
+        }
+
+
         binding.tvDescription.setText(p.getDescription());
     }
 

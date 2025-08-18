@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.maystech.data.model.ItemProductOrder;
+import com.example.maystech.databinding.ItemOrderDetailBinding;
 import com.example.maystech.databinding.ItemProductInOrderListBinding;
+import com.example.maystech.utils.STATIC;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,18 +38,17 @@ public class ProductInOrderListAdapter extends RecyclerView.Adapter<ProductInOrd
     @NonNull
     @Override
     public ProductInOrderListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemProductInOrderListBinding binding = ItemProductInOrderListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemOrderDetailBinding binding = ItemOrderDetailBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductInOrderListViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductInOrderListViewHolder holder, int position) {
         ItemProductOrder item = productOrderList.get(position);
-        Glide.with(context).load(item.getImage()).into(holder.binding.ivImage);
-        holder.binding.tvName.setText(item.getName());
-        holder.binding.tvAmountTotal.setText(String.valueOf(item.getTotalAmount()));
-        holder.binding.tvPriceTotal.setText(String.valueOf(item.getTotalPrice()));
-        Log.e("error", item.getName());
+        Glide.with(context).load(item.getProductImage()).into(holder.binding.ivImage);
+        holder.binding.tvName.setText(item.getProductName());
+        holder.binding.tvAmountTotal.setText(String.format("Số lượng: %d", item.getTotalAmount()));
+        holder.binding.tvPriceTotal.setText(STATIC.formatPrice(item.getTotalPrice()));
 
     }
 
@@ -58,8 +59,8 @@ public class ProductInOrderListAdapter extends RecyclerView.Adapter<ProductInOrd
 
     class ProductInOrderListViewHolder extends RecyclerView.ViewHolder
     {
-        ItemProductInOrderListBinding binding;
-        public ProductInOrderListViewHolder(ItemProductInOrderListBinding binding) {
+        ItemOrderDetailBinding binding;
+        public ProductInOrderListViewHolder(ItemOrderDetailBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MaysTech"
         tools:targetApi="31">
         <activity
+            android:name=".ui.order_detail.OrderDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.feedback.FeedbackActivity"
             android:exported="false" />
         <activity
