@@ -52,6 +52,9 @@ public interface ApiService {
     @GET("products/search")
     Call<ApiResponse<List<Product>>> searchProductByName(@Query("kw") String kw);
 
+    @GET("products/stock/{id}")
+    Call<ApiResponse<Product>> updateStock(@Path("id") int id, @Query("amount") int amount);
+
 
     // === PRODUCT-HIGHLIGHT ===
     @GET("product-highlight")

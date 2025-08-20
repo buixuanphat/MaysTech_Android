@@ -37,4 +37,10 @@ public class ProductRepository {
     }
 
 
+    public void updateStock(int id, int amount, Callback<ApiResponse<Product>> callback)
+    {
+        apiService.updateStock(id, amount).enqueue(callback);
+    }
+
+
 }

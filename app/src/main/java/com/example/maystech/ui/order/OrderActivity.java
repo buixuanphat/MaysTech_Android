@@ -75,7 +75,13 @@ public class OrderActivity extends AppCompatActivity {
         // === ĐẶT HÀNG ===
         binding.btnOrder.setOnClickListener(v ->
         {
-            viewModel.postDelivery(token, u, delivery);
+            if(u.getAddressDetails()==null || u.getAddressDetails().isEmpty())
+            {
+                Toast.makeText(this, "Vui lòng cập nhật thông tin", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                viewModel.postDelivery(token, u, delivery);
+            }
         });
 
         viewModel.getDelivery().observe(this, d ->

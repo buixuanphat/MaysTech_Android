@@ -14,6 +14,16 @@ public class ItemProductInCart implements Serializable {
     private double productPrice;
     private double totalPrice;
     private Integer amount;
+    private int stock;
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     @SerializedName("chosen")
     private boolean isChosen;
 

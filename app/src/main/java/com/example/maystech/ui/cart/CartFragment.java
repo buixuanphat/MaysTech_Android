@@ -106,16 +106,32 @@ public class CartFragment extends Fragment {
             productCartAdapter.setData(products);
             itemProductInCarts.clear();
             itemProductInCarts.addAll(products);
+
             if(itemProductInCarts.isEmpty())
             {
                 binding.tvLabel.setVisibility(VISIBLE);
+            }
+            else
+            {
+                binding.tvLabel.setVisibility(GONE);
+            }
+
+            List<ItemProductInCart> productChosen = new ArrayList<>();
+            for(int i =0; i< itemProductInCarts.size(); i++)
+            {
+                if(itemProductInCarts.get(i).isChosen())
+                {
+                    productChosen.add(itemProductInCarts.get(i));
+                }
+            }
+            if(productChosen.isEmpty())
+            {
                 binding.tvAmountTotalChosen.setVisibility(GONE);
                 binding.tvPriceTotalChosen.setVisibility(GONE);
                 binding.btnOrder.setVisibility(GONE);
             }
             else
             {
-                binding.tvLabel.setVisibility(GONE);
                 binding.tvAmountTotalChosen.setVisibility(VISIBLE);
                 binding.tvPriceTotalChosen.setVisibility(VISIBLE);
                 binding.btnOrder.setVisibility(VISIBLE);
@@ -148,9 +164,6 @@ public class CartFragment extends Fragment {
 
 
         binding.btnOrder.setOnClickListener( v -> {
-            Intent intent = new Intent(requireContext(), OrderActivity.class);
-            intent.putExtra("delivery", delivery);
-
             List<ItemProductInCart> productChosen = new ArrayList<>();
             for(int i =0; i< itemProductInCarts.size(); i++)
             {
@@ -160,8 +173,32 @@ public class CartFragment extends Fragment {
                 }
             }
 
-            intent.putExtra("products", (Serializable) productChosen);
-            startActivityForResult(intent, 100);
+            if(productChosen.size()>0)
+            {
+                boolean flag = true;
+                for(int i =0; i<productChosen.size(); i++)
+                {
+                    if(productChosen.get(i).getAmount()>productChosen.get(i).getStock())
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+
+                if(flag == true)
+                {
+                    Intent intent = new Intent(requireContext(), OrderActivity.class);
+                    intent.putExtra("delivery", delivery);
+                    intent.putExtra("products", (Serializable) productChosen);
+                    startActivityForResult(intent, 100);
+                }
+                else
+                {
+                    Toast.makeText(requireContext(), "Sản phẩm đã hết hàng, vui lòng kiểm tra lại số lượng sản phẩm", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
         });
 
         return binding.getRoot();
